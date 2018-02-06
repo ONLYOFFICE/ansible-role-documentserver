@@ -10,7 +10,7 @@ Installation requires PostgreSQL, RabbitMQ and Redis server in the system or net
 
     - hosts: documentserver
       roles:
-        - role: onlyoffice.documentserver
+        - role: ONLYOFFICE.documentserver
           become: yes
 
 ## Role Variables
@@ -128,7 +128,7 @@ The virtual path for the RabbitMQ server.
     - Stouts.rabbitmq
     - geerlingguy.redis
     - geerlingguy.nodejs
-    - onlyoffice.documentserver
+    - ONLYOFFICE.documentserver
 
 ## License
 
