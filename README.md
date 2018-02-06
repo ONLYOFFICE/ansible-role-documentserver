@@ -67,68 +67,68 @@ The virtual path for the RabbitMQ server.
 
 ## Example Playbook
 
-- hosts: all
+    - hosts: all
 
-  vars:
-    nodejs_version: "6.x"
-    
-    postgresql_global_config_options:
-      - option: listen_addresses
-        value: "*"
-      - option: unix_socket_directories
-        value: '{{ postgresql_unix_socket_directories | join(",") }}'
+    vars:
+        nodejs_version: "6.x"
+        
+        postgresql_global_config_options:
+        - option: listen_addresses
+            value: "*"
+        - option: unix_socket_directories
+            value: '{{ postgresql_unix_socket_directories | join(",") }}'
 
-    postgresql_hba_entries:
-      - type: local
-        database: all
-        user: postgres
-        auth_method: peer
-      - type: local
-        database: all
-        user: all
-        auth_method: peer 
-      - type: host
-        database: all
-        user: all
-        address: 127.0.0.1/32
-        auth_method: md5
-      - type: host
-        database: all
-        user: all
-        address: ::1/128
-        auth_method: md5
-      - type: host
-        database: all
-        user: all
-        address: 0.0.0.0/0
-        auth_method: md5
+        postgresql_hba_entries:
+        - type: local
+            database: all
+            user: postgres
+            auth_method: peer
+        - type: local
+            database: all
+            user: all
+            auth_method: peer 
+        - type: host
+            database: all
+            user: all
+            address: 127.0.0.1/32
+            auth_method: md5
+        - type: host
+            database: all
+            user: all
+            address: ::1/128
+            auth_method: md5
+        - type: host
+            database: all
+            user: all
+            address: 0.0.0.0/0
+            auth_method: md5
 
-    postgresql_databases:
-      - name: "{{ db_server_name }}"
+        postgresql_databases:
+        - name: "{{ db_server_name }}"
 
-    postgresql_users:
-      - name: "{{ db_server_user }}"
-        password: "{{ db_server_pass }}"
+        postgresql_users:
+        - name: "{{ db_server_user }}"
+            password: "{{ db_server_pass }}"
 
-    rabbitmq_users:
-      - user: "{{ rabbitmq_server_user }}"
-        password: "{{ rabbitmq_server_pass }}"
-        vhost: "{{ rabbitmq_server_vpath }}"
-        configure_priv: .*
-        read_priv: .*
-        write_priv: .*
-        tags: administrator
+        rabbitmq_users:
+        - user: "{{ rabbitmq_server_user }}"
+            password: "{{ rabbitmq_server_pass }}"
+            vhost: "{{ rabbitmq_server_vpath }}"
+            configure_priv: .*
+            read_priv: .*
+            write_priv: .*
+            tags: administrator
 
-    rabbitmq_users_remove: []
+        rabbitmq_users_remove: []
 
-    redis_bind_interface: 0.0.0.0
+        redis_bind_interface: 0.0.0.0
 
-  roles:
-    - geerlingguy.postgresql
-    - Stouts.rabbitmq
-    - geerlingguy.redis
-    - geerlingguy.nodejs
-    - ONLYOFFICE.documentserver
+    roles:
+        - geerlingguy.postgresql
+        - Stouts.rabbitmq
+        - geerlingguy.redis
+        - geerlingguy.nodejs
+        - ONLYOFFICE.documentserver
 
 ## License
 
