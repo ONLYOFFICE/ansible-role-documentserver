@@ -1,0 +1,28 @@
+---
+dependencies:
+  - { role: geerlingguy.nodejs, nodejs_version: "6.x" }
+
+galaxy_info:
+  author: Alexey Golubev
+  description: "ONLYOFFICE Document Server is a free collaborative online office suite comprising viewers and editors for texts, spreadsheets and presentations, fully compatible with Office Open XML formats: .docx, .xlsx, .pptx and enabling collaborative editing in real time."
+  company: "Ascensio System SIA"
+  license: "GNU AGPL v3.0"
+  min_ansible_version: 2.3
+  platforms:
+    - name: EL
+      versions:
+      - 7
+    - name: Ubuntu
+      versions:
+      - trusty
+      - xenial
+    - name: Debian
+      versions:
+      - jessie
+      - stretch
+  galaxy_tags:
+    - application
+    - cloud
+    - documents
+    - onlyoffice
+    - web

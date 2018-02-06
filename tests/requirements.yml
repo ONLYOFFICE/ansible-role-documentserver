@@ -1,0 +1,7 @@
+- src: geerlingguy.nodejs
+
+- src: geerlingguy.redis
+
+- src: geerlingguy.postgresql
+
+- src: Stouts.rabbitmq

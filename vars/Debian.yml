@@ -1,0 +1,10 @@
+package_repo: "deb http://download.onlyoffice.com/repo/debian squeeze main"
+
+onlyoffice_default_config: /etc/onlyoffice/documentserver/default.json
+json: json -q -f {{ onlyoffice_default_config }}
+
+filestorage_mount_path: /var/lib/onlyoffice/documentserver/App_Data/cache/files
+fonts_mount_path: /usr/share/fonts
+
+psql: "PGPASSWORD={{ db_server_pass }} psql -q -h{{ db_server_host }} -U{{ db_server_user }} -w -d{{ db_server_name }}"
+createdb_sql: /var/www/onlyoffice/documentserver/server/schema/postgresql/createdb.sql

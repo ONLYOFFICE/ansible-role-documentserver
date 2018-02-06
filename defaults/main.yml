@@ -1,0 +1,14 @@
+db_server_host: localhost
+db_server_name: onlyoffice
+db_server_user: onlyoffice
+db_server_pass: onlyoffice
+
+package_name: onlyoffice-documentserver
+
+redis_server_host: localhost
+redis_server_port: 6379
+
+rabbitmq_server_host: localhost
+rabbitmq_server_user: guest
+rabbitmq_server_pass: guest
+rabbitmq_server_vpath: /

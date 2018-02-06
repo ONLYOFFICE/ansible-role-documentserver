@@ -1,0 +1,3 @@
+onlyoffice_repo: "http://download.onlyoffice.com/repo/centos/main/noarch/onlyoffice-repo.noarch.rpm"
+nginx_repo: "http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm"
+msttcore_fonts: "https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm"

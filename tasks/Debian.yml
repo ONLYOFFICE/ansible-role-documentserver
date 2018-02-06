@@ -1,0 +1,92 @@
+---
+  - name: Add onlyoffice gpg keys
+    apt_key:
+      keyserver: "keyserver.ubuntu.com"
+      id: "CB2DE8E5"
+      state: present
+    become: yes
+
+  - name: Add onlyoffice repositories
+    apt_repository:
+      repo: "{{ package_repo }}"
+      state: present
+    become: yes
+  
+  - name: Say 'yes' to ttf-mscorefonts-installer
+    debconf:
+      name: ttf-mscorefonts-installer
+      question: msttcorefonts/accepted-mscorefonts-eula
+      value: true
+      vtype: boolean
+    become: yes
+    
+  - name: Accept license
+    debconf:
+      name: "{{ package_name }}"
+      question: onlyoffice/accepted-onlyoffice-license
+      value: 'true'
+      vtype: boolean
+    become: yes
+    
+  - name: Set up db host name
+    debconf:
+      name: "{{ package_name }}"
+      question: onlyoffice/db-host
+      value: "{{ db_server_host }}"
+      vtype: string
+    when: db_server_host != ""
+    become: yes
+
+  - name: Set up db name
+    debconf:
+      name: "{{ package_name }}"
+      question: onlyoffice/db-name
+      value: "{{ db_server_name }}"
+      vtype: string
+    when: db_server_name != ""
+    become: yes
+
+  - name: Set up db user
+    debconf:
+      name: "{{ package_name }}"
+      question: onlyoffice/db-user
+      value: "{{ db_server_user }}"
+      vtype: string
+    when: db_server_user != ""
+    become: yes
+
+  - name: Set up db user password
+    debconf:
+      name: "{{ package_name }}"
+      question: onlyoffice/db-pwd
+      value: "{{ db_server_pass }}"
+      vtype: password
+    when: db_server_pass != ""
+    become: yes
+
+  - name: Install documentserver
+    apt: 
+      name: "{{ package_name }}"
+      update_cache: yes
+      force: yes 
+      state: latest
+    become: yes
+
+  - name: Set up redis host name
+    shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis.host  = \"{{ redis_server_host }}\"'"
+    when: redis_server_host != ""
+    notify: restart-ds
+
+  - name: Set up redis port number
+    shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis.port  = \"{{ redis_server_port }}\"'"
+    when: redis_server_port != ""
+    notify: restart-ds
+
+  - name: Set up rabbitmq url
+    shell: "{{ json }} -I -e 'this.rabbitmq.url = \"{{ rabbitmq_server_url }}\"'"
+    when: rabbitmq_server_url != ""
+    notify: restart-ds
+
+  - name: Create db if it not exist
+    shell: "{{ psql }} -f {{ createdb_sql }}"
+    notify: restart-ds

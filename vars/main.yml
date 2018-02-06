@@ -1,0 +1,7 @@
+onlyoffice_default_config: /etc/onlyoffice/documentserver/default.json
+json: json -q -f {{ onlyoffice_default_config }}
+
+psql: "PGPASSWORD={{ db_server_pass }} psql -q -h{{ db_server_host }} -U{{ db_server_user }} -w -d{{ db_server_name }}"
+createdb_sql: /var/www/onlyoffice/documentserver/server/schema/postgresql/createdb.sql
+
+rabbitmq_server_url: "amqp://{{ rabbitmq_server_user }}:{{ rabbitmq_server_pass }}@{{ rabbitmq_server_host }}{{ rabbitmq_server_vpath }}"

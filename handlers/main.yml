@@ -1,0 +1,8 @@
+  - name: restart-ds
+    supervisorctl:
+      name: "{{ item }}"
+      state: restarted
+    with_items:
+    - 'onlyoffice-documentserver:converter'
+    - 'onlyoffice-documentserver:docservice'
+    become: yes
