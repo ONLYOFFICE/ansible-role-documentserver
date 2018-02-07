@@ -1,3 +1,4 @@
+debian_repo: "deb http://deb.debian.org/debian {{ ansible_distribution_release }} contrib"
 package_repo: "deb http://download.onlyoffice.com/repo/debian squeeze main"
 
 onlyoffice_default_config: /etc/onlyoffice/documentserver/default.json

@@ -11,7 +11,14 @@
       repo: "{{ package_repo }}"
       state: present
     become: yes
-  
+
+  - name: Add debian contrib repositories
+    apt_repository:
+      repo: "{{ debian_repo }}"
+      state: present
+    when: ansible_distribution == "Debian"
+    become: yes
+
   - name: Say 'yes' to ttf-mscorefonts-installer
     debconf:
       name: ttf-mscorefonts-installer
