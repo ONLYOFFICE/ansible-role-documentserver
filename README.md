@@ -70,7 +70,7 @@ The virtual path for the RabbitMQ server.
     - hosts: all
 
     vars:
-        nodejs_version: "6.x"
+        nodejs_version: "8.x"
         
         postgresql_global_config_options:
         - option: listen_addresses

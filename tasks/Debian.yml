@@ -75,7 +75,6 @@
     apt: 
       name: "{{ package_name }}"
       update_cache: yes
-      force: yes 
       state: latest
     become: yes
 

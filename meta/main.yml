@@ -1,6 +1,6 @@
 ---
 dependencies:
-  - { role: geerlingguy.nodejs, nodejs_version: "6.x" }
+  - { role: geerlingguy.nodejs, nodejs_version: "8.x" }
 
 galaxy_info:
   author: Alexey Golubev
@@ -16,6 +16,7 @@ galaxy_info:
       versions:
       - trusty
       - xenial
+      - bionic
     - name: Debian
       versions:
       - jessie
