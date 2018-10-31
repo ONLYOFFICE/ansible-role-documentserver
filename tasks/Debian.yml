@@ -2,7 +2,7 @@
   - name: Add onlyoffice gpg keys
     apt_key:
       keyserver: "keyserver.ubuntu.com"
-      id: "CB2DE8E5"
+      id: "8320CA65CB2DE8E5"
       state: present
     become: yes
 
