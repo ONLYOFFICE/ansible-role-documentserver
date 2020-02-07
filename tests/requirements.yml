@@ -4,4 +4,4 @@
 
 - src: geerlingguy.postgresql
 
-- src: Stouts.rabbitmq
+- src: mrlesmithjr.rabbitmq

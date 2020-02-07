@@ -43,7 +43,7 @@
         password: "{{ db_server_pass }}"
 
     rabbitmq_users:
-      - user: "{{ rabbitmq_server_user }}"
+      - name: "{{ rabbitmq_server_user }}"
         password: "{{ rabbitmq_server_pass }}"
         vhost: "{{ rabbitmq_server_vpath }}"
         configure_priv: .*
@@ -52,6 +52,7 @@
         tags: administrator
 
     rabbitmq_users_remove: []
+    rabbitmq_debian_version: 3.7.23-1
 
     redis_bind_interface: 0.0.0.0
 
@@ -62,7 +63,7 @@
 
   roles:
     - geerlingguy.postgresql
-    - Stouts.rabbitmq
+    - mrlesmithjr.rabbitmq
     - geerlingguy.redis
     - geerlingguy.nodejs
     - role_under_test

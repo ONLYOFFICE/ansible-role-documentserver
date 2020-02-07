@@ -111,7 +111,7 @@ The virtual path for the RabbitMQ server.
             password: "{{ db_server_pass }}"
 
         rabbitmq_users:
-        - user: "{{ rabbitmq_server_user }}"
+        - name: "{{ rabbitmq_server_user }}"
             password: "{{ rabbitmq_server_pass }}"
             vhost: "{{ rabbitmq_server_vpath }}"
             configure_priv: .*
@@ -125,7 +125,7 @@ The virtual path for the RabbitMQ server.
 
     roles:
         - geerlingguy.postgresql
-        - Stouts.rabbitmq
+        - mrlesmithjr.rabbitmq
         - geerlingguy.redis
         - geerlingguy.nodejs
         - ONLYOFFICE.documentserver
