@@ -8,6 +8,7 @@ env:
   - distro: ubuntu1404
   - distro: debian8
   - distro: debian9
+  - distro: debian10
 
 
 script:
