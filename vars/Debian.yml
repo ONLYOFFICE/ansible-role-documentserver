@@ -2,7 +2,7 @@ debian_repo: "deb http://deb.debian.org/debian {{ ansible_distribution_release }
 package_repo: "deb http://download.onlyoffice.com/repo/debian squeeze main"
 
 onlyoffice_default_config: /etc/onlyoffice/documentserver/local.json
-json: json -q -f {{ onlyoffice_default_config }}
+json: /var/www/onlyoffice/documentserver/npm/json -q -f {{ onlyoffice_default_config }}
 
 filestorage_mount_path: /var/lib/onlyoffice/documentserver/App_Data/cache/files
 fonts_mount_path: /usr/share/fonts
