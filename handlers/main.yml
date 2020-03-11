@@ -3,6 +3,6 @@
       name: "{{ item }}"
       state: restarted
     with_items:
-    - 'onlyoffice-documentserver:converter'
-    - 'onlyoffice-documentserver:docservice'
+    - 'ds:converter'
+    - 'ds:docservice'
     become: yes
