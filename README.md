@@ -63,15 +63,13 @@ The virtual path for the RabbitMQ server.
 
 ## Dependencies
 
-    geerlingguy.nodejs
+    None.
 
 ## Example Playbook
 
     - hosts: all
 
     vars:
-        nodejs_version: "8.x"
-        
         postgresql_global_config_options:
         - option: listen_addresses
             value: "*"
@@ -127,7 +125,6 @@ The virtual path for the RabbitMQ server.
         - geerlingguy.postgresql
         - mrlesmithjr.rabbitmq
         - geerlingguy.redis
-        - geerlingguy.nodejs
         - ONLYOFFICE.documentserver
 
 ## License
