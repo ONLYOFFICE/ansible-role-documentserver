@@ -1,9 +1,7 @@
 ---
 - hosts: all
 
-  vars:
-    nodejs_version: "8.x"
-    
+  vars:   
     postgresql_global_config_options:
       - option: listen_addresses
         value: "*"

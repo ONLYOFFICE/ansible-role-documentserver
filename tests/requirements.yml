@@ -1,5 +1,3 @@
-- src: geerlingguy.nodejs
-
 - src: geerlingguy.redis
 
 - src: geerlingguy.postgresql
