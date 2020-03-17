@@ -1,0 +1,47 @@
+{
+  "services": {
+    "CoAuthoring": {
+      "sql": {
+        "dbHost": "{{ db_server_host }}",
+        "dbName": "{{ db_server_name }}",
+        "dbUser": "{{ db_server_user }}",
+        "dbPass": "{{ db_server_pass }}",
+        "type": "postgres",
+        "dbPort": "5432"
+      },
+      "redis": {
+        "host": "{{ redis_server_host }}",
+        "port": "{{ redis_server_port }}"
+      },
+      "token": {
+        "enable": {
+          "request": {
+            "inbox": {{ 'true' if onlyoffice_secret is defined else 'false' }},
+            "outbox": {{ 'true' if onlyoffice_secret is defined else 'false' }}
+          },
+          "browser": {{ 'true' if onlyoffice_secret is defined else 'false' }}
+        },
+        "inbox": {
+          "header": "Authorization"
+        },
+        "outbox": {
+          "header": "Authorization"
+        }
+      },
+      "secret": {
+        "inbox": {
+          "string": "{{ onlyoffice_secret|d() }}"
+        },
+        "outbox": {
+          "string": "{{ onlyoffice_secret|d() }}"
+        },
+        "session": {
+          "string": "{{ onlyoffice_secret|d() }}"
+        }
+      }
+    }
+  },
+  "rabbitmq": {
+    "url": "amqp://{{ rabbitmq_server_user }}:{{ rabbitmq_server_pass }}@{{ rabbitmq_server_host }}{{ rabbitmq_server_vpath }}"
+  }
+}

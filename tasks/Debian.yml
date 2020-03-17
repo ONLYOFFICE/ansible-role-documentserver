@@ -35,42 +35,6 @@
       vtype: boolean
     become: yes
     
-  - name: Set up db host name
-    debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/db-host
-      value: "{{ db_server_host }}"
-      vtype: string
-    when: db_server_host != ""
-    become: yes
-
-  - name: Set up db name
-    debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/db-name
-      value: "{{ db_server_name }}"
-      vtype: string
-    when: db_server_name != ""
-    become: yes
-
-  - name: Set up db user
-    debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/db-user
-      value: "{{ db_server_user }}"
-      vtype: string
-    when: db_server_user != ""
-    become: yes
-
-  - name: Set up db user password
-    debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/db-pwd
-      value: "{{ db_server_pass }}"
-      vtype: password
-    when: db_server_pass != ""
-    become: yes
-
   - name: Install documentserver
     apt: 
       name: "{{ package_name }}"
@@ -78,19 +42,13 @@
       state: latest
     become: yes
 
-  - name: Set up redis host name
-    shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis.host  = \"{{ redis_server_host }}\"'"
-    when: redis_server_host != ""
-    notify: restart-ds
-
-  - name: Set up redis port number
-    shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis.port  = \"{{ redis_server_port }}\"'"
-    when: redis_server_port != ""
-    notify: restart-ds
-
-  - name: Set up rabbitmq url
-    shell: "{{ json }} -I -e 'this.rabbitmq.url = \"{{ rabbitmq_server_url }}\"'"
-    when: rabbitmq_server_url != ""
+  - name: Configure documentserver
+    template:
+      src: local.json.j2
+      dest: /etc/onlyoffice/documentserver/local.json
+      owner: root
+      group: root
+      mode: 0644
     notify: restart-ds
 
   - name: Create db if it not exist
