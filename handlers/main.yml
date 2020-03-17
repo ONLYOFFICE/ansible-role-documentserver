@@ -1,8 +1,14 @@
-  - name: restart-ds
-    supervisorctl:
-      name: "{{ item }}"
-      state: restarted
-    with_items:
-    - 'ds:converter'
-    - 'ds:docservice'
-    become: yes
+---
+- name: restart-ds
+  supervisorctl:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+  - 'ds:converter'
+  - 'ds:docservice'
+  become: yes
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted

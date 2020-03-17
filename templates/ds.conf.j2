@@ -1,0 +1,23 @@
+include /etc/nginx/includes/http-common.conf;
+server {
+  listen 0.0.0.0:80;
+  listen [::]:80 default_server;
+  server_tokens off;
+  
+  include /etc/nginx/includes/ds-*.conf;
+
+  # support for webroot authentication in letsencrypt
+  location ^~ /.well-known/acme-challenge/ {
+  
+      # Set correct content type. According to this:
+      # https://community.letsencrypt.org/t/using-the-webroot-domain-verification-method/1445/29
+      # Current specification requires "text/plain" or no content header at all.
+      # It seems that "text/plain" is a safe option.
+      default_type "text/plain";
+  
+      # This directory must be the same as in /etc/letsencrypt/cli.ini
+      # as "webroot-path" parameter. Also don't forget to set "authenticator" parameter
+      # there to "webroot".
+      root         /var/www/letsencrypt;
+  }
+}

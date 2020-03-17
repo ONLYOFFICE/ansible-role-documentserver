@@ -1,0 +1,12 @@
+---
+
+- name: Configure nginx
+  template:
+    src: "{{ 'ds-ssl.conf.j2' if (onlyoffice_nginx_ssl_certificate is defined and onlyoffice_nginx_ssl_certificate_key is defined) else 'ds.conf.j2' }}"
+    dest: /etc/onlyoffice/documentserver/nginx/ds.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: True
+  notify: restart nginx
+  tags: nginx
