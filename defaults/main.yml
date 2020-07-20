@@ -12,3 +12,10 @@ rabbitmq_server_host: localhost
 rabbitmq_server_user: guest
 rabbitmq_server_pass: guest
 rabbitmq_server_vpath: /
+
+add_ssl: true
+certs_directory: "var/www/onlyoffice/Data/certs/"
+source_directory: "~/certs/"
+key_file: "tls.key"
+cert_file: "tls.crt"
+

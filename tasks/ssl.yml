@@ -1,0 +1,53 @@
+---
+  - name: wait for come up
+    shell: sleep 10s
+    become: yes
+
+  - name: Create certs directory
+    file:
+            path: "{{ certs_directory }}"
+            state: directory
+    become: yes
+
+
+  - name: Copy key to server
+    copy:
+            src: "{{ source_directory }}"
+            dest: "{{ certs_directory + key_file }}"
+            owner: root
+            group: root
+            mode: '400'
+    become: yes
+
+  - name: Copy certificate to server
+    copy:
+            src: "{{ source_directory }}"
+            dest: "{{ certs_directory + cert_file }}"
+    become: yes
+
+  - name: Stop Nginx
+    shell: service nginx stop
+    become: yes
+
+  - name: Copy ds.conf template
+    shell: cp -f /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl /etc/onlyoffice/documentserver/nginx/ds.conf
+    become: yes
+
+  - name: Edit ssl cert path
+    lineinfile:
+            path: /etc/onlyoffice/documentserver/nginx/ds.conf
+            regexp: 'SSL_CERTIFICATE_PATH'
+            line: '  ssl_certificate {{certs_directory + cert_file}};'
+    become: yes
+
+  - name: Edit ssl key path
+    lineinfile:
+            path: /etc/onlyoffice/documentserver/nginx/ds.conf
+            regexp: 'SSL_KEY_PATH'
+            line: '  ssl_certificate_key {{certs_directory + key_file}};'
+    become: yes
+
+  - name: Start Nginx
+    shell: service nginx start
+    become: yes
+  
