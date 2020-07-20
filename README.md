@@ -61,6 +61,30 @@ The password set for the RabbitMQ account.
 
 The virtual path for the RabbitMQ server.
 
+    add_ssl: false
+
+The option to add ssl configuration or not.
+
+    certs_directory: "/var/www/onlyoffice/Data/certs/"
+
+The path to certificate and key directory on server.
+
+    source_directory: "~/certs/"
+
+The path to certificate and key directory on host.
+
+    key_file: "tls.key"
+
+The name of key file.
+
+    cert_file: "tls.crt"
+
+The name of certificate file.
+
+    nginx_config_path: "/etc/onlyoffice/documentserver/nginx/ds.conf"
+
+The path to nginx configuration file
+
 ## Dependencies
 
     None.

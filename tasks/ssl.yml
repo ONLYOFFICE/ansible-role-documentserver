@@ -12,17 +12,19 @@
 
   - name: Copy key to server
     copy:
-            src: "{{ source_directory }}"
+            src: "{{ source_directory + key_file }}"
             dest: "{{ certs_directory + key_file }}"
             owner: root
             group: root
-            mode: '400'
+            mode: "0400"
     become: yes
 
   - name: Copy certificate to server
     copy:
-            src: "{{ source_directory }}"
+            src: "{{ source_directory + cert_file }}"
             dest: "{{ certs_directory + cert_file }}"
+            owner: root
+            group: root
     become: yes
 
   - name: Stop Nginx
@@ -30,21 +32,21 @@
     become: yes
 
   - name: Copy ds.conf template
-    shell: cp -f /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl /etc/onlyoffice/documentserver/nginx/ds.conf
+    shell: cp -f /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl "{{ nginx_config_path }}"
     become: yes
 
   - name: Edit ssl cert path
     lineinfile:
-            path: /etc/onlyoffice/documentserver/nginx/ds.conf
-            regexp: 'SSL_CERTIFICATE_PATH'
-            line: '  ssl_certificate {{certs_directory + cert_file}};'
+            path: "{{ nginx_config_path }}" 
+            regexp: "SSL_CERTIFICATE_PATH"
+            line: "  ssl_certificate {{certs_directory + cert_file}};"
     become: yes
 
   - name: Edit ssl key path
     lineinfile:
-            path: /etc/onlyoffice/documentserver/nginx/ds.conf
-            regexp: 'SSL_KEY_PATH'
-            line: '  ssl_certificate_key {{certs_directory + key_file}};'
+            path: "{{ nginx_config_path }}" 
+            regexp: "SSL_KEY_PATH"
+            line: "  ssl_certificate_key {{certs_directory + key_file}};"
     become: yes
 
   - name: Start Nginx
