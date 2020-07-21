@@ -17,6 +17,7 @@ script:
   - export test_idempotence=false
 
   # Create ssl certificate and key
+  - mkdir ${PWD}/files/
   - openssl genrsa -out ${PWD}/files/tls.key 2048
   - openssl req -new -key ${PWD}/files/tls.key -out ${PWD}/files/tls.csr
   - openssl x509 -req -days 365 -in ${PWD}/files/tls.csr -signkey ${PWD}/files/tls.key -out ${PWD}/files/tls.crt
