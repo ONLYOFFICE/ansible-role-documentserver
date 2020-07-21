@@ -7,6 +7,8 @@
     - 'ds:docservice'
     become: yes
 
-  - name: reload-nginx
-    shell: nginx -s reload
+  - name: restart-nginx
+    service:
+      name: "nginx"
+      state: restarted
     become: yes
