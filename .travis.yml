@@ -28,8 +28,8 @@ script:
   - chmod +x ${PWD}/tests/test.sh
 
   # Run tests.
-  - ${PWD}/tests/test.sh
-  - ${PWD}/tests/test.sh playbook=test_ssl.yml
+  - ${PWD}/tests/test.sh container_id=test1
+  - ${PWD}/tests/test.sh container_id=test2 playbook=test_ssl.yml
 
 after_failure:
   # Check what happened on systemd systems.
