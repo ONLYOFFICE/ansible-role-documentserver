@@ -73,7 +73,7 @@
 
     - name: Get health check status
       uri:
-        url: http://localhost/healthcheck/
+        url: https://localhost/healthcheck/
         return_content: yes
         validate_certs: no
       register: healthcheck
