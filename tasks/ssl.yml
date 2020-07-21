@@ -12,7 +12,7 @@
 
   - name: Copy key to server
     copy:
-            src: "{{ source_directory + key_file }}"
+            src: "{{ key_file }}"
             dest: "{{ certs_directory + key_file }}"
             owner: root
             group: root
@@ -21,7 +21,7 @@
 
   - name: Copy certificate to server
     copy:
-            src: "{{ source_directory + cert_file }}"
+            src: "{{ cert_file }}"
             dest: "{{ certs_directory + cert_file }}"
             owner: root
             group: root

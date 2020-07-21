@@ -69,10 +69,6 @@ The option to add ssl configuration or not.
 
 The path to certificate and key directory on server.
 
-    source_directory: "~/certs/"
-
-The path to certificate and key directory on host.
-
     key_file: "tls.key"
 
 The name of key file.
