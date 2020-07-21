@@ -1,8 +1,4 @@
 ---
-  - name: wait for come up
-    shell: sleep 10s
-    become: yes
-
   - name: Create certs directory
     file:
             path: "{{ certs_directory }}"
@@ -13,7 +9,7 @@
   - name: Copy key to server
     copy:
             src: "{{ key_file }}"
-            dest: "{{ certs_directory + key_file }}"
+            dest: "{{ certs_directory + 'tls.key' }}"
             owner: root
             group: root
             mode: "0400"
@@ -22,13 +18,9 @@
   - name: Copy certificate to server
     copy:
             src: "{{ cert_file }}"
-            dest: "{{ certs_directory + cert_file }}"
+            dest: "{{ certs_directory + 'tls.crt' }}"
             owner: root
             group: root
-    become: yes
-
-  - name: Stop Nginx
-    shell: service nginx stop
     become: yes
 
   - name: Copy ds.conf template
@@ -39,17 +31,16 @@
     lineinfile:
             path: "{{ nginx_config_path }}" 
             regexp: "SSL_CERTIFICATE_PATH"
-            line: "  ssl_certificate {{certs_directory + cert_file}};"
+            line: "  ssl_certificate {{ certs_directory + 'tls.crt' }};"
     become: yes
 
   - name: Edit ssl key path
     lineinfile:
             path: "{{ nginx_config_path }}" 
             regexp: "SSL_KEY_PATH"
-            line: "  ssl_certificate_key {{certs_directory + key_file}};"
+            line: "  ssl_certificate_key {{ certs_directory + 'tls.key' }};"
+    notify: 
+        reload-nginx
     become: yes
 
-  - name: Start Nginx
-    shell: service nginx start
-    become: yes
-  
+ 

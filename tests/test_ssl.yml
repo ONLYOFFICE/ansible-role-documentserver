@@ -54,7 +54,9 @@
 
     redis_bind_interface: 0.0.0.0
 
-    add_ssl: true
+    enable_ssl: true
+    key_file: "test.key"
+    cert_file: "test.crt"
 
   pre_tasks:
     - name: Update apt cache.

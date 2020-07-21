@@ -18,10 +18,10 @@ script:
 
   # Create ssl certificate and key
   - mkdir ${PWD}/files/
-  - openssl genrsa -out ${PWD}/files/tls.key 2048
-  - openssl req -new -key ${PWD}/files/tls.key -out ${PWD}/files/tls.csr -subj "/C=RU/ST=NizhObl/L=NizhNov/O=RK-Tech/OU=TestUnit/CN=TestName"
+  - openssl genrsa -out ${PWD}/files/test.key 2048
+  - openssl req -new -key ${PWD}/files/test.key -out ${PWD}/files/test.csr -subj "/C=RU/ST=NizhObl/L=NizhNov/O=RK-Tech/OU=TestUnit/CN=TestName"
 
-  - openssl x509 -req -days 365 -in ${PWD}/files/tls.csr -signkey ${PWD}/files/tls.key -out ${PWD}/files/tls.crt
+  - openssl x509 -req -days 365 -in ${PWD}/files/test.csr -signkey ${PWD}/files/test.key -out ${PWD}/files/test.crt
 
   # Download test shim.
   - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/

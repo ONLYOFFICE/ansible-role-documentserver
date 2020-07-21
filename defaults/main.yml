@@ -13,8 +13,6 @@ rabbitmq_server_user: guest
 rabbitmq_server_pass: guest
 rabbitmq_server_vpath: /
 
-add_ssl: false
-certs_directory: "/var/www/onlyoffice/Data/certs/"
-key_file: "tls.key"
-cert_file: "tls.crt"
-nginx_config_path: "/etc/onlyoffice/documentserver/nginx/ds.conf"
+enable_ssl: false
+key_file: "~/certs/tls.key"
+cert_file: "~/certs/tls.crt"

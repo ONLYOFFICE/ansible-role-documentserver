@@ -6,4 +6,4 @@
 
 - name: Include SSL if needed
   include_tasks: ssl.yml
-  when:  add_ssl  == true
+  when:  enable_ssl  == true

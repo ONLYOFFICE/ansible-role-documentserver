@@ -6,3 +6,7 @@
     - 'ds:converter'
     - 'ds:docservice'
     become: yes
+
+  - name: reload-nginx
+    shell: nginx -s reload
+    become: yes
