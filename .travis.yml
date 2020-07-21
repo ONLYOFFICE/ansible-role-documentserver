@@ -16,6 +16,11 @@ script:
   - export cleanup=false
   - export test_idempotence=false
 
+  # Create ssl certificate and key
+  - openssl genrsa -out ${PWD}/files/tls.key 2048
+  - openssl req -new -key ${PWD}/files/tls.key -out ${PWD}/files/tls.csr
+  - openssl x509 -req -days 365 -in ${PWD}/files/tls.csr -signkey ${PWD}/files/tls.key -out ${PWD}/files/tls.crt
+
   # Download test shim.
   - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
   - chmod +x ${PWD}/tests/test.sh
