@@ -13,7 +13,7 @@ env:
 script:
   # Configure test script so we can run extra tests after playbook is run.
   - export container_id=$(date +%s)
-  - export cleanup=false
+  - export cleanup=true
   - export test_idempotence=false
 
   # Create ssl certificate and key
@@ -28,8 +28,9 @@ script:
   - chmod +x ${PWD}/tests/test.sh
 
   # Run tests.
-  - ${PWD}/tests/test.sh container_id=test1
-  - ${PWD}/tests/test.sh container_id=test2 playbook=test_ssl.yml
+  - ${PWD}/tests/test.sh 
+  - export playbook="test_ssl.yml"
+  - ${PWD}/tests/test.sh
 
 after_failure:
   # Check what happened on systemd systems.
