@@ -29,6 +29,7 @@ script:
 
   # Run tests.
   - ${PWD}/tests/test.sh
+  - ${PWD}/tests/test.sh playbook=test_ssl.yml
 
 after_failure:
   # Check what happened on systemd systems.
