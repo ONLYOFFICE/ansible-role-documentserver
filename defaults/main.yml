@@ -12,3 +12,7 @@ rabbitmq_server_host: localhost
 rabbitmq_server_user: guest
 rabbitmq_server_pass: guest
 rabbitmq_server_vpath: /
+
+enable_ssl: false
+key_file: "~/certs/tls.key"
+cert_file: "~/certs/tls.crt"

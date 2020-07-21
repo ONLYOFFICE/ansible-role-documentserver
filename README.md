@@ -61,6 +61,19 @@ The password set for the RabbitMQ account.
 
 The virtual path for the RabbitMQ server.
 
+    enable_ssl: false
+
+The option to add ssl configuration or not.
+
+    key_file: "~/certs/tls.key"
+
+The path to the key file.
+
+    cert_file: "~/certs/tls.crt"
+
+The path to the certificate file.
+
+
 ## Dependencies
 
     None.

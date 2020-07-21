@@ -3,3 +3,7 @@
   
 - name: Include OS-specific task.
   include_tasks: "{{ ansible_os_family }}.yml"
+
+- name: Include SSL if needed
+  include_tasks: ssl.yml
+  when:  enable_ssl  == true
