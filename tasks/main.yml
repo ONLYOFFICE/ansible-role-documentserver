@@ -7,3 +7,12 @@
 - name: Include SSL if needed
   include_tasks: ssl.yml
   when:  enable_ssl  == true
+
+- name: Supply license file
+  copy:
+    content: "{{ onlyoffice_license }}"
+    dest: /var/www/onlyoffice/Data/license.lic
+    owner: root
+    group: root
+    mode: 0644
+  when: onlyoffice_license is defined
