@@ -50,7 +50,7 @@
         tags: administrator
 
     rabbitmq_users_remove: []
-    rabbitmq_debian_version: 3.8.5
+    rabbitmq_debian_version: 3.8.5-1
 
     redis_bind_interface: 0.0.0.0
 
