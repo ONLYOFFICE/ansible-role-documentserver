@@ -61,7 +61,7 @@
 
   roles:
     - geerlingguy.postgresql
-    - mrlesmithjr.rabbitmq
+    - geerlingguy.rabbitmq
     - geerlingguy.redis
     - role_under_test
 
