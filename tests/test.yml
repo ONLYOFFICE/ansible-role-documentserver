@@ -50,7 +50,7 @@
         tags: administrator
 
     rabbitmq_users_remove: []
-    rabbitmq_version: 3.7.26
+    rabbitmq_debian_version: 3.7.18
 
     redis_bind_interface: 0.0.0.0
 
@@ -61,7 +61,7 @@
 
   roles:
     - geerlingguy.postgresql
-    - geerlingguy.rabbitmq
+    - mrlesmithjr.rabbitmq
     - geerlingguy.redis
     - role_under_test
 
