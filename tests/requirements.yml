@@ -1,5 +1,5 @@
 - src: geerlingguy.redis
 
-- src: mrlesmithjr.rabbitmq
+- src: geerlingguy.postgresql
 
-- src: geerlingguy.rabbitmq
+- src: mrlesmithjr.rabbitmq
