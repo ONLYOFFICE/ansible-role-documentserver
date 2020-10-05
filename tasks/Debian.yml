@@ -88,6 +88,15 @@
     when: redis_server_port != ""
     notify: restart-ds
 
+  - name: Set up cluster mode
+    debconf:
+      name: "{{ package_name }}"
+      question: onlyoffice/cluster-mode
+      value: 'true'
+      vtype: boolean
+    become: yes
+    when: cluster_mode == true
+
   - name: Set up rabbitmq url
     shell: "{{ json }} -I -e 'this.rabbitmq.url = \"{{ rabbitmq_server_url }}\"'"
     when: rabbitmq_server_url != ""
