@@ -24,6 +24,17 @@
       state: latest
     become: yes
 
-  - name: Initialize onlyoffice-documentserver
+  - name: Initialize onlyoffice-documentserver (non free package)
     shell: echo -e "{{ db_server_host }}\n{{ db_server_name }}\n{{ db_server_user }}\n{{ db_server_pass }}\n{{ redis_server_host }}\n{{ rabbitmq_server_host }}\n{{ rabbitmq_server_user }}\n{{ rabbitmq_server_pass }}" | bash documentserver-configure.sh
     become: yes
+    environment:
+      CLUSTER_MODE: "{{ cluster_mode }}"
+    when: is_nonfree_package|bool
+
+  - name: Initialize onlyoffice-documentserver (free package)
+    shell: echo -e "{{ db_server_host }}\n{{ db_server_name }}\n{{ db_server_user }}\n{{ db_server_pass }}\n{{ rabbitmq_server_host }}\n{{ rabbitmq_server_user }}\n{{ rabbitmq_server_pass }}" | bash documentserver-configure.sh
+    become: yes
+    environment:
+      CLUSTER_MODE: "{{ cluster_mode }}"
+    when: not is_nonfree_package|bool
+
