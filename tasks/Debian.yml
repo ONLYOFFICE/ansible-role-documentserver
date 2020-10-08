@@ -97,7 +97,7 @@
       value: 'true'
       vtype: boolean
     become: yes
-    when: cluster_mode == true
+    when: cluster_mode|bool
 
   - name: Set up rabbitmq url
     shell: "{{ json }} -I -e 'this.rabbitmq.url = \"{{ rabbitmq_server_url }}\"'"
