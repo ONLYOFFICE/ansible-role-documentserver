@@ -71,6 +71,15 @@
     when: db_server_pass != ""
     become: yes
 
+  - name: Set up cluster mode
+    debconf:
+      name: "{{ package_name }}"
+      question: onlyoffice/cluster-mode
+      value: 'true'
+      vtype: boolean
+    become: yes
+    when: cluster_mode|bool
+
   - name: Install documentserver
     apt: 
       name: "{{ package_name }}"
@@ -89,15 +98,6 @@
     when: redis_server_port != ""
     notify: restart-ds
     when: is_nonfree_package|bool
-
-  - name: Set up cluster mode
-    debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/cluster-mode
-      value: 'true'
-      vtype: boolean
-    become: yes
-    when: cluster_mode|bool
 
   - name: Set up rabbitmq url
     shell: "{{ json }} -I -e 'this.rabbitmq.url = \"{{ rabbitmq_server_url }}\"'"
