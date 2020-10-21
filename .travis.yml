@@ -3,6 +3,7 @@ services: docker
 
 env:
   - distro: centos7
+  - distro: centos8
   - distro: ubuntu1804
   - distro: ubuntu1604
   - distro: debian8
