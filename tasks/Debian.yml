@@ -107,3 +107,9 @@
   - name: Create db if it not exist
     shell: "{{ psql }} -f {{ createdb_sql }}"
     notify: restart-ds
+
+  - name: Start example service
+    supervisorctl:
+      name: ds:example
+      state: started
+    when: start_example|bool

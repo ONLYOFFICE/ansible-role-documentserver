@@ -38,3 +38,9 @@
       CLUSTER_MODE: "{{ cluster_mode }}"
     when: not is_nonfree_package|bool
 
+  - name: Start example service
+    supervisorctl:
+      name: ds:example
+      state: started
+    when: start_example|bool
+
