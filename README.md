@@ -73,6 +73,13 @@ The path to the key file.
 
 The path to the certificate file.
 
+    cluster_mode: false
+
+The option to enable or disable cluster mode.
+
+    start_example: false
+
+The option for starting example service after install.
 
 ## Dependencies
 
