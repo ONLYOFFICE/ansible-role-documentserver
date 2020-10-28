@@ -1,26 +1,22 @@
 - name: Include Debian variables
-  include_vars: "Debian.yml"
+  include_vars: "{{ ansible_os_family }}.yml"
   when: ansible_os_family == "Debian"
 
-- name: Include Centos 7 variables
-  include_vars: "RedHat.yml"
-  when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
-
-- name: Include Centos 8 variables
-  include_vars: "RedHat8.yml"
-  when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+- name: Include Centos variables
+  include_vars: "{{ ansible_os_family }}{{ ansible_distribution_major_version }}.yml"
+  when: ansible_os_family == "RedHat"
 
 - name: Include Debian tasks
-  include_tasks: "Debian.yml"
+  include_tasks: "{{ ansible_os_family }}.yml"
   when: ansible_os_family == "Debian"
 
-- name: Include Centos 7 tasks
-  include_tasks: "RedHat.yml"
-  when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+- name: Include Centos install tasks
+  include_tasks: "{{ ansible_os_family }}{{ ansible_distribution_major_version }}.yml"
+  when: ansible_os_family == "RedHat"
 
-- name: Include Centos 8 tasks
-  include_tasks: "RedHat8.yml"
-  when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+- name: Include Centos postinstall tasks
+  include_tasks: "{{ ansible_os_family }}_post.yml"
+  when: ansible_os_family == "RedHat"
 
 - name: Include SSL if needed
   include_tasks: ssl.yml
