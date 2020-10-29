@@ -1,0 +1,26 @@
+---
+  - name: Add onlyoffice repo
+    dnf:
+      name: "{{ onlyoffice_repo }}"
+      disable_gpg_check: yes
+    become: yes
+
+  - name: Install epel repo
+    dnf: 
+      name: epel-release
+    become: yes
+
+  - name: Install dependency
+    dnf:
+      name: "{{ item.name }}"
+      disable_gpg_check: yes
+    with_items:
+      - { name: "{{ nginx_repo }}", state: present }
+    become: yes
+
+  - name: Install documentserver
+    dnf:
+      name: "{{ package_name }}"
+      update_cache: yes
+      state: latest
+    become: yes
