@@ -50,11 +50,6 @@
         write_priv: .*
         tags: administrator
 
-    rabbitmq_version: "{% if (ansible_distribution_release == 'focal' or (ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8')) %}3.8.8{% elif (ansible_distribution_release == 'buster') %}3.7.18{% else %}3.6.16{% endif %}"
-    rabbitmq_deb_focal_url: "https://packagecloud.io/rabbitmq/rabbitmq-server/packages/{{ ansible_distribution | lower }}/bionic/{{ rabbitmq_deb }}/download"
-    rabbitmq_deb_other_url: "https://packagecloud.io/rabbitmq/rabbitmq-server/packages/{{ ansible_distribution | lower }}/{{ ansible_distribution_release }}/{{ rabbitmq_deb }}/download"
-    rabbitmq_deb_url: " {{ (ansible_distribution_release == 'focal') | ternary(rabbitmq_deb_focal_url, rabbitmq_deb_other_url) }}"
-
     redis_bind_interface: 0.0.0.0
 
     enable_ssl: true
@@ -89,7 +84,7 @@
 
   roles:
     - geerlingguy.postgresql
-    - geerlingguy.rabbitmq
+    - onlyoffice.rabbitmq
     - geerlingguy.redis
     - role_under_test
 
