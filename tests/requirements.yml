@@ -2,4 +2,4 @@
 
 - src: geerlingguy.postgresql
 
-- src: mrlesmithjr.rabbitmq
+- src: onlyoffice.rabbitmq

@@ -50,13 +50,6 @@
         write_priv: .*
         tags: administrator
 
-    rabbitmq_users_remove: []
-    rabbitmq_debian_version: 3.8.5-1
-    rabbitmq_redhat_version: "{{ '3.8.9' if ansible_distribution_major_version == '8' else '3.6.1' }}"
-    rabbitmq_redhat_url: "{{ 'https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.8.9' if ansible_distribution_major_version == '8' else 'http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.1' }}"
-    rabbitmq_redhat_package: "{{ 'rabbitmq-server-3.8.9-1.el8.noarch.rpm' if ansible_distribution_major_version == '8' else 'rabbitmq-server-3.6.1-1.noarch.rpm' }}"
-    rabbitmq_redhat_repo_key: "{{ 'https://www.rabbitmq.com/rabbitmq-release-signing-key.asc' if ansible_distribution_major_version == '8' else 'https://www.rabbitmq.com/rabbitmq-signing-key-public.asc' }}"
-
     redis_bind_interface: 0.0.0.0
 
     enable_ssl: true
@@ -67,6 +60,13 @@
     - name: Update apt cache.
       apt: update_cache=yes cache_valid_time=600
       when: ansible_os_family == 'Debian'
+
+    - name: Install dirmngr
+      apt:
+        name: dirmngr
+        state: present
+      when: ansible_os_family == "Debian"
+      become: yes
 
     - name: Install lang packs for centos8
       dnf:
@@ -84,7 +84,7 @@
 
   roles:
     - geerlingguy.postgresql
-    - mrlesmithjr.rabbitmq
+    - onlyoffice.rabbitmq
     - geerlingguy.redis
     - role_under_test
 
