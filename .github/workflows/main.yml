@@ -9,11 +9,6 @@ jobs:
     steps:
 
       - uses: actions/checkout@v2
-      
-      - name: Set environment
-        run: |
-          export test_idempotence="false"
-          export cleanup="true"
 
       - name: Download test script
         run: |
@@ -22,6 +17,8 @@ jobs:
           
       - name: Run test on Centos 7
         run: |
+          export test_idempotence="false"
+          export cleanup="true"
           export distro=centos7
           ${PWD}/tests/test.sh
           export playbook="test_ssl.yml"
@@ -29,6 +26,8 @@ jobs:
           
       - name: Run test on Centos 8
         run: |
+          export test_idempotence="false"
+          export cleanup="true"
           export distro=centos8
           ${PWD}/tests/test.sh
           export playbook="test_ssl.yml"
@@ -36,6 +35,8 @@ jobs:
           
       - name: Run test on Debian 8
         run: |
+          export test_idempotence="false"
+          export cleanup="true"
           export distro=debian8
           ${PWD}/tests/test.sh
           export playbook="test_ssl.yml"
@@ -43,6 +44,8 @@ jobs:
           
       - name: Run test on Debian 9
         run: |
+          export test_idempotence="false"
+          export cleanup="true"
           export distro=debian9
           ${PWD}/tests/test.sh
           export playbook="test_ssl.yml"
@@ -50,6 +53,8 @@ jobs:
           
       - name: Run test on Debian 10
         run: |
+          export test_idempotence="false"
+          export cleanup="true"
           export distro=debian10
           ${PWD}/tests/test.sh
           export playbook="test_ssl.yml"
@@ -57,6 +62,8 @@ jobs:
           
       - name: Run test on Ubuntu 16.04
         run: |
+          export test_idempotence="false"
+          export cleanup="true"
           export distro=ubuntu1604
           ${PWD}/tests/test.sh
           export playbook="test_ssl.yml"
@@ -64,6 +71,8 @@ jobs:
           
       - name: Run test on Ubuntu 18.04
         run: |
+          export test_idempotence="false"
+          export cleanup="true"
           export distro=ubuntu1804
           ${PWD}/tests/test.sh
           export playbook="test_ssl.yml"
@@ -71,6 +80,8 @@ jobs:
           
       - name: Run test on Ubuntu 20.04
         run: |
+          export test_idempotence="false"
+          export cleanup="true"
           export distro=ubuntu2004
           ${PWD}/tests/test.sh
           export playbook="test_ssl.yml"
