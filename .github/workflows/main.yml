@@ -9,6 +9,11 @@ jobs:
     steps:
 
       - uses: actions/checkout@v2
+      
+      - name: Set environment
+        run: |
+          export test_idempotence="false"
+          export cleanup="true"
 
       - name: Download test script
         run: |
