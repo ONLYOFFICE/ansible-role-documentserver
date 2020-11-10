@@ -1,0 +1,51 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Download test script
+        run: |
+          wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
+          chmod +x ${PWD}/tests/test.sh
+          
+      - name: Run test on Centos 7
+        run: |
+          export distro=centos7
+          ${PWD}/tests/test.sh
+          
+      - name: Run test on Centos 8
+        run: |
+          export distro=centos8
+          ${PWD}/tests/test.sh
+      - name: Run test on Debian 8
+        run: |
+          export distro=debian8
+          ${PWD}/tests/test.sh
+      - name: Run test on Debian 9
+        run: |
+          export distro=debian9
+          ${PWD}/tests/test.sh
+      - name: Run test on Debian 10
+        run: |
+          export distro=debian10
+          ${PWD}/tests/test.sh
+      - name: Run test on Ubuntu 16.04
+        run: |
+          export distro=ubuntu1604
+          ${PWD}/tests/test.sh
+      - name: Run test on Ubuntu 18.04
+        run: |
+          export distro=ubuntu1804
+          ${PWD}/tests/test.sh
+          
+      - name: Run test on Ubuntu 20.04
+        run: |
+          export distro=ubuntu2004
+          ${PWD}/tests/test.sh
