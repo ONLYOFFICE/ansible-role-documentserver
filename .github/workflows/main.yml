@@ -15,6 +15,13 @@ jobs:
           wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
           chmod +x ${PWD}/tests/test.sh
           
+      - name: Create ssl certificate and key
+        run: |
+          mkdir ${PWD}/files/
+          openssl genrsa -out ${PWD}/files/test.key 2048
+          openssl req -new -key ${PWD}/files/test.key -out ${PWD}/files/test.csr -subj "/C=RU/ST=NizhObl/L=NizhNov/O=RK-Tech/OU=TestUnit/CN=TestName"
+          openssl x509 -req -days 365 -in ${PWD}/files/test.csr -signkey ${PWD}/files/test.key -out ${PWD}/files/test.crt
+          
       - name: Run test on Centos 7
         run: |
           export test_idempotence="false"
