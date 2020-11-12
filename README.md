@@ -65,6 +65,10 @@ The virtual path for the RabbitMQ server.
 
 The option to add ssl configuration or not.
 
+    copy_certs: false
+
+The option to copy the certificates or their path.
+
     key_file: "~/certs/tls.key"
 
 The path to the key file.

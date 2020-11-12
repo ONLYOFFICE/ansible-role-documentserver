@@ -3,6 +3,7 @@
     file:
             path: "{{ certs_directory }}"
             state: directory
+    when: copy_certs == true
     become: yes
 
 
@@ -13,6 +14,7 @@
             owner: root
             group: root
             mode: "0400"
+    when: copy_certs == true
     become: yes
 
   - name: Copy certificate to server
@@ -21,24 +23,15 @@
             dest: "{{ certs_directory + 'tls.crt' }}"
             owner: root
             group: root
+    when: copy_certs == true
     become: yes
 
   - name: Copy ds.conf template
-    shell: cp -f /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl "{{ nginx_config_path }}"
-    become: yes
-
-  - name: Edit ssl cert path
-    lineinfile:
-            path: "{{ nginx_config_path }}" 
-            regexp: "SSL_CERTIFICATE_PATH"
-            line: "  ssl_certificate {{ certs_directory + 'tls.crt' }};"
-    become: yes
-
-  - name: Edit ssl key path
-    lineinfile:
-            path: "{{ nginx_config_path }}" 
-            regexp: "SSL_KEY_PATH"
-            line: "  ssl_certificate_key {{ certs_directory + 'tls.key' }};"
+    template: 
+      src: etc/onlyoffice/documentserver/nginx/ds.conf.j2
+      dest: "{{ nginx_config_path }}"
+      owner: root
+      group: root
     notify: 
         restart-nginx
     become: yes
