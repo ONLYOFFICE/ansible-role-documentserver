@@ -80,15 +80,17 @@
 
   - name: Set up redis host name
     shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis.host  = \"{{ redis_server_host }}\"'"
-    when: redis_server_host != ""
+    when:
+      - redis_server_host != ""
+      - is_nonfree_package|bool
     notify: restart-ds
-    when: is_nonfree_package|bool
 
   - name: Set up redis port number
     shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis.port  = \"{{ redis_server_port }}\"'"
-    when: redis_server_port != ""
+    when:
+      - redis_server_port != ""
+      - is_nonfree_package|bool
     notify: restart-ds
-    when: is_nonfree_package|bool
 
   - name: Set up cluster mode
     debconf:
