@@ -30,3 +30,7 @@
     group: root
     mode: 0644
   when: onlyoffice_license is defined
+
+- name: Inlude extra files
+  include_tasks: extra_config.yml
+  when: extra_files is defined

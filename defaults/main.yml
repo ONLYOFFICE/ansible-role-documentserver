@@ -19,3 +19,6 @@ key_file: "~/certs/tls.key"
 cert_file: "~/certs/tls.crt"
 cluster_mode: false
 start_example: false
+
+#extra_files:
+#  - {url: example.org/download, dest: /var/www/onlyoffice/documentserver, mode: 644}
