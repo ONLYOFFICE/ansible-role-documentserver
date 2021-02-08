@@ -40,15 +40,6 @@ jobs:
           export playbook="test_ssl.yml"
           ${PWD}/tests/test.sh
           
-      - name: Run test on Debian 8
-        run: |
-          export test_idempotence="false"
-          export cleanup="true"
-          export distro=debian8
-          ${PWD}/tests/test.sh
-          export playbook="test_ssl.yml"
-          ${PWD}/tests/test.sh
-          
       - name: Run test on Debian 9
         run: |
           export test_idempotence="false"

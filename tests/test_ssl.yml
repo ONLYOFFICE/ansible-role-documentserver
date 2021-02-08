@@ -41,6 +41,8 @@
       - name: "{{ db_server_user }}"
         password: "{{ db_server_pass }}"
 
+    postgresql_restarted_state: "reloaded"
+
     rabbitmq_users:
       - name: "{{ rabbitmq_server_user }}"
         password: "{{ rabbitmq_server_pass }}"
