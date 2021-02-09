@@ -1,10 +1,27 @@
 ---
+  - name: "Check if gpg key port is ok (port 11371)"
+    wait_for:
+      host: keyserver.ubuntu.com
+      port: 11371
+      timeout: 5
+    register: gpg_port_status
+    ignore_errors: true 
+     
   - name: Add onlyoffice gpg keys
     apt_key:
       keyserver: "keyserver.ubuntu.com"
       id: "8320CA65CB2DE8E5"
       state: present
     become: yes
+    when: not gpg_port_status.failed
+    
+  - name: Add onlyoffice gpg keys on port 80
+    apt_key:
+      keyserver: "hkp://keyserver.ubuntu.com:80"
+      id: "8320CA65CB2DE8E5"
+      state: present
+    become: yes
+    when: gpg_port_status.failed
 
   - name: Add onlyoffice repositories
     apt_repository:
