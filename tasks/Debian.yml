@@ -68,7 +68,9 @@
       question: onlyoffice/db-pwd
       value: "{{ db_server_pass }}"
       vtype: password
-    when: db_server_pass != ""
+    when:
+      - db_server_pass != ""
+      - not ansible_check_mode
     become: yes
 
   - name: Install documentserver
