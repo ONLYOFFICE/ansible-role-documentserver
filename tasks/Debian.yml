@@ -78,6 +78,11 @@
       state: latest
     become: yes
 
+  - name: Set up redis map
+    shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis  = {}'"
+    when: redis_server_host != ""
+    notify: restart-ds
+
   - name: Set up redis host name
     shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis.host  = \"{{ redis_server_host }}\"'"
     when: redis_server_host != ""
