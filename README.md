@@ -1,6 +1,7 @@
 # Ansible Role: ONLYOFFICE Document Server
 
 [![Test](https://github.com/ONLYOFFICE/ansible-role-documentserver/actions/workflows/ci.yml/badge.svg)](https://github.com/ONLYOFFICE/ansible-role-documentserver/actions/workflows/ci.yml)
+
 Installs and configures ONLYOFFICE Document Server on RHEL/CentOS or Debian/Ubuntu servers.
 
 ## Requirements
