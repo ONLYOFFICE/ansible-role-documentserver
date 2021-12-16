@@ -3,22 +3,12 @@
   remote_user: root
   become: true
   vars:
-    ssl_enable: "{{ lookup('env', 'SSL_ON') }}"
+    proto: "{{ lookup('env', 'PROTO') }}"
   tasks:
-    - name: Get health check status HTTP
+    - name: "Get health check status on {{ proto }}://localhost/healthcheck/"
       uri:
-        url: http://localhost/healthcheck/
+        url: "{{ proto }}://localhost/healthcheck/"
         return_content: yes
         validate_certs: no
       register: healthcheck
-      when: ssl_enable == false
-      failed_when: "'true' not in healthcheck.content"
-
-    - name: Get health check status HTTPS
-      uri:
-        url: https://localhost/healthcheck/
-        return_content: yes
-        validate_certs: no
-      register: healthcheck
-      when: ssl_enable == true
       failed_when: "'true' not in healthcheck.content"

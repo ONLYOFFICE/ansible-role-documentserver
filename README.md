@@ -61,7 +61,7 @@ The password set for the RabbitMQ account.
 
 The virtual path for the RabbitMQ server.
 
-    enable_ssl: false
+    proto: http
 
 The option to add ssl configuration or not.
 

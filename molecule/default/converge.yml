@@ -19,6 +19,9 @@
     postgresql_users:
       - name: "{{ db_server_user }}"
         password: "{{ db_server_pass }}"
+
+
+
     rabbitmq_users:
       - name: "{{ rabbitmq_server_user }}"
         password: "{{ rabbitmq_server_pass }}"
@@ -32,7 +35,7 @@
 
     redis_bind_interface: 0.0.0.0
 
-    enable_ssl: "{{ lookup('env', 'SSL_ON') }}"
+    proto: "{{ lookup('env', 'PROTO') }}"
     key_file: "test.key"
     cert_file: "test.crt"
 

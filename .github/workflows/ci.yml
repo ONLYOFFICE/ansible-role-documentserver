@@ -24,9 +24,9 @@ jobs:
           - ubuntu1604
           - ubuntu1804
           - ubuntu2004
-        ssl:
-          - false
-          - true  
+        proto:
+          - http
+          - https  
 
     steps:
       - name: Check out the codebase.
@@ -55,4 +55,4 @@ jobs:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
-          MOLECULE_SSL_ON: ${{ matrix.ssl}}
+          MOLECULE_PROTO: ${{ matrix.proto}}
