@@ -7,8 +7,10 @@
     - name: Install PostgreSQL Python libraries.
       apt:
         update_cache: yes
-        name: "python3-psycopg2"
+        pkg:
+          - python3-psycopg2
+          - gnupg
         state: present
       when: ansible_os_family == "Debian"
       changed_when: false
-      failed_when: false    
+      failed_when: false
