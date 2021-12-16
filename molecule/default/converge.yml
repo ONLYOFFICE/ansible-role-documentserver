@@ -13,6 +13,7 @@
       - { type: host, database: all, user: all, address: '127.0.0.1/32', auth_method: md5 }
       - { type: host, database: all, user: all, address: '::1/128', auth_method: md5 }
 
+    postgres_users_no_log: false
     postgresql_databases:
       - name: "{{ db_server_name }}"
     postgresql_users:
