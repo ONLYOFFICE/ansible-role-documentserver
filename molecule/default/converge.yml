@@ -40,4 +40,4 @@
     - geerlingguy.postgresql
     - onlyoffice.rabbitmq
     - geerlingguy.redis
-    - ../../ansible-role-documentserver
+    - ansible-role-documentserver
