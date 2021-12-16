@@ -20,6 +20,7 @@ rules:
   document-start: disable
   empty-lines:
     max: 3
+    max-end: 1
     level: error
   hyphens:
     level: error
@@ -31,5 +32,3 @@ rules:
     type: unix
   trailing-spaces: disable
   truthy: disable
-skip_list:
-  - package-latest
