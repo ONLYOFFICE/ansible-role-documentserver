@@ -1,0 +1,30 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: debian_9
+    image: docker.io/geerlingguy/docker-debian9-ansible
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+provisioner:
+  name: ansible
+  env:
+    SSL_ON: true
+verifier:
+  name: ansible
+scenario:
+  test_sequence:
+     - lint
+     - destroy
+     - dependency
+     - syntax
+     - create
+     - prepare
+     - converge
+     - verify
+     - destroy

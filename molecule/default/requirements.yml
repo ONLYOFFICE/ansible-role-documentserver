@@ -1,0 +1,5 @@
+---
+roles:
+- src: geerlingguy.redis
+- src: geerlingguy.postgresql
+- src: onlyoffice.rabbitmq

@@ -1,0 +1,20 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: localhost
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
+scenario:
+  name: default
+  test_sequence:
+    - lint
+lint: |
+  set -e
+  yamllint .
+  ansible-lint .
+  flake8

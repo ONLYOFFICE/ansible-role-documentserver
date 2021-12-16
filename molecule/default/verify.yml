@@ -1,0 +1,24 @@
+---
+- hosts: all
+  remote_user: root
+  become: true
+  vars:
+    ssl_enable: "{{ lookup('env', 'SSL_ON') }}"
+  tasks:
+    - name: Get health check status HTTP
+      uri:
+        url: http://localhost/healthcheck/
+        return_content: yes
+        validate_certs: no
+      register: healthcheck
+      when: ssl_enable == false
+      failed_when: "'true' not in healthcheck.content"
+
+    - name: Get health check status HTTPS
+      uri:
+        url: https://localhost/healthcheck/
+        return_content: yes
+        validate_certs: no
+      register: healthcheck
+      when: ssl_enable == true
+      failed_when: "'true' not in healthcheck.content"
