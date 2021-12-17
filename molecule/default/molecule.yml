@@ -4,7 +4,7 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: "${MOLECULE_DISTRO}-${MOLECULE_SSL_ON}"
+  - name: "${MOLECULE_DISTRO}"
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu2004}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
@@ -15,7 +15,7 @@ provisioner:
   name: ansible
   env:
     PROTO: ${MOLECULE_PROTO:-http}
-    MOLECULE_NO_LOG: false
+    MOLECULE_NO_LOG: ${MOLECULE_NO_LOG:-true}
 verifier:
   name: ansible
 scenario:
