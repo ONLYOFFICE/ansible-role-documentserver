@@ -106,7 +106,7 @@
   - name: Set up redis port number
     shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis.port  = \"{{ redis_server_port }}\"'"
     when:
-      - redis_server_port|length > 0
+      - redis_server_port
       - is_nonfree_package|bool
     notify: restart-ds
 
