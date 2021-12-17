@@ -1,6 +1,6 @@
 # Ansible Role: ONLYOFFICE Document Server
 
-[![Build Status](https://travis-ci.org/ONLYOFFICE/ansible-role-documentserver.svg?branch=master)](https://travis-ci.org/ONLYOFFICE/ansible-role-documentserver)
+[![Test](https://github.com/ONLYOFFICE/ansible-role-documentserver/actions/workflows/ci.yml/badge.svg)](https://github.com/ONLYOFFICE/ansible-role-documentserver/actions/workflows/ci.yml)
 
 Installs and configures ONLYOFFICE Document Server on RHEL/CentOS or Debian/Ubuntu servers.
 
@@ -61,7 +61,7 @@ The password set for the RabbitMQ account.
 
 The virtual path for the RabbitMQ server.
 
-    enable_ssl: false
+    proto: http
 
 The option to add ssl configuration or not.
 
@@ -143,7 +143,7 @@ The option for starting example service after install.
 
     roles:
         - geerlingguy.postgresql
-        - mrlesmithjr.rabbitmq
+        - ONLYOFFICE.rabbitmq
         - geerlingguy.redis
         - ONLYOFFICE.documentserver
 
