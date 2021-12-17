@@ -3,6 +3,9 @@
     file:
             path: "{{ certs_directory }}"
             state: directory
+            owner: root
+            group: root
+            mode: "0644"
     become: yes
 
 
@@ -21,11 +24,14 @@
             dest: "{{ certs_directory + 'tls.crt' }}"
             owner: root
             group: root
+            mode: "0644"
     become: yes
 
   - name: Copy ds.conf template
-    shell: cp -f /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl "{{ nginx_config_path }}"
+    command: cp -f /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl "{{ nginx_config_path }}"
     become: yes
+    register: myoutput
+    changed_when: myoutput.rc != 0
 
   - name: Edit ssl cert path
     lineinfile:

@@ -4,7 +4,7 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: "${MOLECULE_DISTRO}"
+  - name: "${MOLECULE_DISTRO:-ubuntu2004}"
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu2004}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
@@ -20,6 +20,7 @@ verifier:
   name: ansible
 scenario:
   test_sequence:
+     - lint
      - destroy
      - dependency
      - syntax
