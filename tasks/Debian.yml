@@ -58,7 +58,7 @@
       question: onlyoffice/db-host
       value: "{{ db_server_host }}"
       vtype: string
-    when: db_server_host != ""
+    when: db_server_host|length > 0
     become: yes
 
   - name: Set up db name
@@ -67,7 +67,7 @@
       question: onlyoffice/db-name
       value: "{{ db_server_name }}"
       vtype: string
-    when: db_server_name != ""
+    when: db_server_name|length > 0
     become: yes
 
   - name: Set up db user
@@ -76,7 +76,7 @@
       question: onlyoffice/db-user
       value: "{{ db_server_user }}"
       vtype: string
-    when: db_server_user != ""
+    when: db_server_user|length > 0
     become: yes
 
   - name: Set up db user password
@@ -85,7 +85,7 @@
       question: onlyoffice/db-pwd
       value: "{{ db_server_pass }}"
       vtype: password
-    when: db_server_pass != ""
+    when: db_server_pass|length > 0
     become: yes
 
   - name: Install documentserver
@@ -97,15 +97,19 @@
 
   - name: Set up redis host name
     shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis.host  = \"{{ redis_server_host }}\"'"
-    when: redis_server_host != ""
+    when:
+      - redis_server_host|length > 0
+      - is_nonfree_package|bool
     notify: restart-ds
-    when: is_nonfree_package|bool
+
 
   - name: Set up redis port number
     shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis.port  = \"{{ redis_server_port }}\"'"
-    when: redis_server_port != ""
+    when:
+      - redis_server_port|length > 0
+      - is_nonfree_package|bool
     notify: restart-ds
-    when: is_nonfree_package|bool
+
 
   - name: Set up cluster mode
     debconf:
@@ -118,11 +122,13 @@
 
   - name: Set up rabbitmq url
     shell: "{{ json }} -I -e 'this.rabbitmq.url = \"{{ rabbitmq_server_url }}\"'"
-    when: rabbitmq_server_url != ""
+    when: rabbitmq_server_url|length > 0
     notify: restart-ds
 
   - name: Create db if it not exist
     shell: "{{ psql }} -f {{ createdb_sql }}"
+    register: result
+    changed_when: result.rc != 0
     notify: restart-ds
 
   - name: Start example service
