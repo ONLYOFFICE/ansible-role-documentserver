@@ -16,6 +16,12 @@
       - { name: "{{ msttcore_fonts }}", state: present }
       - { name: "{{ nginx_repo }}", state: present }
     become: yes
+  
+  - name: Set up JWT settings
+      environment:
+        JWT_ENABLED: "{{ jwt_enabled }}"
+        JWT_SECRET: "{{ jwt_secret }}"
+        JWT_HEADER: "{{ jwt_header }}"
 
   - name: Install documentserver
     yum:
