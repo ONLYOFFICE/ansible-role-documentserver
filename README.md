@@ -65,6 +65,18 @@ The virtual path for the RabbitMQ server.
 
 The option to add ssl configuration or not.
 
+    jwt_enabled: false
+
+The option to add jwt configuration or not.
+
+    jwt_secret: secret
+
+The secret set for jwt option.
+
+    jwt_header: Authorization
+
+The header set for jwt option.
+
     key_file: "~/certs/tls.key"
 
 The path to the key file.
