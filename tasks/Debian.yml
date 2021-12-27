@@ -140,7 +140,7 @@
       question: onlyoffice/jwt-enabled
       value: "{{ jwt_enabled }}"
       vtype: boolean
-    when: jwt-enabled|bool
+    when: jwt_enabled|bool
     notify: restart-ds
     
   - name: Set up JWT SECRET
@@ -149,7 +149,9 @@
       question: onlyoffice/jwt-secret
       value: "{{ jwt_secret }}"
       vtype: string
-    when: jwt-secret|length > 0
+    when: 
+      - jwt_secret|length > 0
+      - jwt_enabled|bool
     become: yes
 
   - name: Set up JWT HEADER
@@ -158,7 +160,9 @@
       question: onlyoffice/jwt-header
       value: "{{ jwt_header }}"
       vtype: string
-    when: jwt-header|length > 0
+    when: 
+      - jwt_header|length > 0
+      - jwt_enabled|bool
     become: yes
 
   - name: Start example service
