@@ -3,7 +3,7 @@
     shell: |
       set -o pipefail
       echo -e "{{ db_server_host }}\n{{ db_server_name }}\n{{ db_server_user }}\n{{ db_server_pass }}\n{{ rabbitmq_server_host }}\n{{ rabbitmq_server_user }}\n{{ rabbitmq_server_pass }}" | bash documentserver-configure.sh \
-      || echo -e "{{ db_server_host }}\n{{ db_server_name }}\n{{ db_server_user }}\n{{ db_server_pass }}\n{{ redis_server_host }}\n{{ rabbitmq_server_host }}\n{{ rabbitmq_server_user }}\n{{ rabbitmq_server_pass }}" | bash documentserver-configure.sh \
+      || echo -e "{{ db_server_host }}\n{{ db_server_name }}\n{{ db_server_user }}\n{{ db_server_pass }}\n{{ redis_server_host }}\n{{ rabbitmq_server_host }}\n{{ rabbitmq_server_user }}\n{{ rabbitmq_server_pass }}" | bash documentserver-configure.sh
     become: yes
     environment:
       CLUSTER_MODE: "{{ cluster_mode }}"
