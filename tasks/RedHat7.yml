@@ -16,7 +16,7 @@
       - { name: "{{ msttcore_fonts }}", state: present }
       - { name: "{{ nginx_repo }}", state: present }
     become: yes
-  
+
   - name: Install documentserver
     yum:
       name: "{{ package_name }}"
