@@ -133,6 +133,38 @@
     changed_when: result.rc != 0
     notify: restart-ds
 
+  - name: Set up JWT if needed
+    become: yes
+    debconf:
+      name: "{{ package_name }}"
+      question: onlyoffice/jwt-enabled
+      value: "{{ jwt_enabled }}"
+      vtype: boolean
+    when: jwt_enabled|bool
+    notify: restart-ds
+    
+  - name: Set up JWT Secret
+    debconf:
+      name: "{{ package_name }}"
+      question: onlyoffice/jwt-secret
+      value: "{{ jwt_secret }}"
+      vtype: string
+    when: 
+      - jwt_secret|length > 0
+      - jwt_enabled|bool
+    become: yes
+
+  - name: Set up JWT Header
+    debconf:
+      name: "{{ package_name }}"
+      question: onlyoffice/jwt-header
+      value: "{{ jwt_header }}"
+      vtype: string
+    when: 
+      - jwt_header|length > 0
+      - jwt_enabled|bool
+    become: yes
+
   - name: Start example service
     supervisorctl:
       name: ds:example

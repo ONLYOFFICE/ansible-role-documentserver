@@ -6,6 +6,9 @@
     become: yes
     environment:
       CLUSTER_MODE: "{{ cluster_mode }}"
+      JWT_ENABLED: "{{ jwt_enabled }}"
+      JWT_SECRET: "{{ jwt_secret }}"
+      JWT_HEADER: "{{ jwt_header }}"      
     when: is_nonfree_package|bool
 
   - name: Initialize onlyoffice-documentserver (free package)
@@ -15,6 +18,9 @@
     become: yes
     environment:
       CLUSTER_MODE: "{{ cluster_mode }}"
+      JWT_ENABLED: "{{ jwt_enabled }}"
+      JWT_SECRET: "{{ jwt_secret }}"
+      JWT_HEADER: "{{ jwt_header }}"
     when: not is_nonfree_package|bool
 
   - name: Start example service
