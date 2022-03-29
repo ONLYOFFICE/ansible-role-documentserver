@@ -28,16 +28,22 @@
     become: yes
 
   - name: Copy ds.conf template
-    command: cp -f /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl "{{ nginx_config_path }}"
+    copy:
+            src: /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl
+            dest: "{{ nginx_config_path }}"
+            remote_src: yes
+            force: false
+    notify:
+        restart-nginx
     become: yes
-    register: myoutput
-    changed_when: myoutput.rc != 0
 
   - name: Edit ssl cert path
     lineinfile:
             path: "{{ nginx_config_path }}" 
             regexp: "SSL_CERTIFICATE_PATH"
             line: "  ssl_certificate {{ certs_directory + 'tls.crt' }};"
+    notify:
+        restart-nginx
     become: yes
 
   - name: Edit ssl key path
@@ -48,5 +54,3 @@
     notify: 
         restart-nginx
     become: yes
-
- 
