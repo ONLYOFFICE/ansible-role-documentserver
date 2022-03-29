@@ -31,8 +31,11 @@
     copy:
             src: /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl
             dest: "{{ nginx_config_path }}"
-            remote_src: yes
+            remote_src: true
             force: false
+            owner: root
+            group: root
+            mode: "0644"
     notify:
         restart-nginx
     become: yes
