@@ -175,6 +175,26 @@
       - jwt_enabled | bool
     become: yes
 
+  - name: "configure {{ onlyoffice_default_config }} ..."
+    block:
+      - name: "read {{ onlyoffice_default_config }}"
+        command: "cat {{ onlyoffice_default_config }}"
+        become: true
+        check_mode: false
+        changed_when: false
+        register: _local_json
+
+      - name: read json
+        set_fact:
+          current_onlyoffice_local_json: "{{ _local_json.stdout | from_json }}"
+
+      - name: "write {{ onlyoffice_default_config }}"
+        copy:
+          dest: "{{ onlyoffice_default_config }}"
+          content: "{{ current_onlyoffice_local_json | combine(onlyoffice_local_json, recursive=true) | to_nice_json(indent=2, sort_keys=false) }}\n"
+        notify: restart-ds
+    when: onlyoffice_local_json
+
   - name: Start example service
     community.general.supervisorctl:
       name: ds:example
