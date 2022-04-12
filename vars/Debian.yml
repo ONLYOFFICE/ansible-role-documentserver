@@ -4,6 +4,29 @@ package_repo: "deb http://download.onlyoffice.com/repo/debian squeeze main"
 onlyoffice_default_config: /etc/onlyoffice/documentserver/local.json
 json: /var/www/onlyoffice/documentserver/npm/json -q -f {{ onlyoffice_default_config }}
 
+# allow injecting settings into local.json
+onlyoffice_local_json: {}
+# example:
+# onlyoffice_local_json:
+#   services:
+#     CoAuthoring:
+#       requestDefaults:
+#         rejectUnauthorized: false
+#       token:
+#         enable:
+#           request:
+#             inbox: true
+#             outbox: true
+#           browser: true
+#       secret:
+#         inbox:
+#           string: xxyyzz
+#         outbox:
+#           string: xxyyzz
+#         session:
+#           string: xxyyzz
+
+
 filestorage_mount_path: /var/lib/onlyoffice/documentserver/App_Data/cache/files
 fonts_mount_path: /usr/share/fonts
 
