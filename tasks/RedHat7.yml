@@ -21,5 +21,5 @@
     yum:
       name: "{{ package_name }}"
       update_cache: yes
-      state: latest
+      state: "{{ package_state }}"
     become: yes
