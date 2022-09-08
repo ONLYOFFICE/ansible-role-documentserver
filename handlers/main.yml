@@ -1,5 +1,5 @@
   - name: restart-ds
-    supervisorctl:
+    community.general.supervisorctl:
       name: "{{ item }}"
       state: restarted
     with_items:
@@ -8,7 +8,7 @@
     become: yes
 
   - name: restart-nginx
-    service:
+    ansible.builtin.service:
       name: "nginx"
       state: restarted
     become: yes
