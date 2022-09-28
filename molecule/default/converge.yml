@@ -2,6 +2,11 @@
 - name: Converge
   hosts: all
   vars:
+    postgresql_global_config_options:
+      - option: listen_addresses
+        value: "*"
+      - option: unix_socket_directories
+        value: '{{ postgresql_unix_socket_directories | join(",") }}'
     postgresql_hba_entries:
       - { type: local, database: all, user: postgres, auth_method: peer }
       - { type: local, database: all, user: all, auth_method: peer }
@@ -14,7 +19,6 @@
     postgresql_users:
       - name: "{{ db_server_user }}"
         password: "{{ db_server_pass }}"
-
 
 
     rabbitmq_users:
