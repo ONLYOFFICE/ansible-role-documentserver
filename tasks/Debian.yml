@@ -125,7 +125,7 @@
   - name: Set up rabbitmq url
     ansible.builtin.shell: "{{ json }} -I -e 'this.rabbitmq.url = \"{{ rabbitmq_server_url }}\"'"
     when: rabbitmq_server_url | length > 0
-    notify: restart-ds
+    notify: Restart-ds
 
   - name: Create db if it not exist
     ansible.builtin.shell: "{{ psql }} -f {{ createdb_sql }}"
