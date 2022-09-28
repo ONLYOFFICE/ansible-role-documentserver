@@ -6,7 +6,7 @@ driver:
 platforms:
   - name: "${MOLECULE_DISTRO:-ubuntu2004}"
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu2004}-ansible:latest"
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    command: ${MOLECULE_DOCKER_COMMAND:-"apt-get update && apt-get install apt-utils"}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
