@@ -46,7 +46,7 @@
             regexp: "SSL_KEY_PATH"
             line: "  ssl_certificate_key {{ certs_directory + 'tls.key' }};"
     notify: 
-        restart-nginx
+        Restart-nginx
     become: yes
 
  

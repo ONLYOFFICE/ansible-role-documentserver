@@ -9,7 +9,7 @@
       JWT_ENABLED: "{{ jwt_enabled }}"
       JWT_SECRET: "{{ jwt_secret }}"
       JWT_HEADER: "{{ jwt_header }}"      
-    when: is_nonfree_package|bool
+    when: is_nonfree_package | bool
 
   - name: Initialize onlyoffice-documentserver (free package)
     ansible.builtin.shell: |
@@ -21,7 +21,7 @@
       JWT_ENABLED: "{{ jwt_enabled }}"
       JWT_SECRET: "{{ jwt_secret }}"
       JWT_HEADER: "{{ jwt_header }}"
-    when: not is_nonfree_package|bool
+    when: not is_nonfree_package | bool
 
   - name: Start example service
     community.general.supervisorctl:

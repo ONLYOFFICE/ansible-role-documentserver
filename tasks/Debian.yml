@@ -58,7 +58,7 @@
       question: onlyoffice/db-host
       value: "{{ db_server_host }}"
       vtype: string
-    when: db_server_host|length > 0
+    when: db_server_host | length > 0
     become: yes
 
   - name: Set up db name
@@ -67,7 +67,7 @@
       question: onlyoffice/db-name
       value: "{{ db_server_name }}"
       vtype: string
-    when: db_server_name|length > 0
+    when: db_server_name | length > 0
     become: yes
 
   - name: Set up db user
@@ -76,7 +76,7 @@
       question: onlyoffice/db-user
       value: "{{ db_server_user }}"
       vtype: string
-    when: db_server_user|length > 0
+    when: db_server_user | length > 0
     become: yes
 
   - name: Set up db user password
@@ -86,7 +86,7 @@
       value: "{{ db_server_pass }}"
       vtype: password
     when:
-      - db_server_pass|length > 0
+      - db_server_pass | length > 0
       - not ansible_check_mode
     become: yes
 
@@ -101,7 +101,7 @@
     ansible.builtin.shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis.host  = \"{{ redis_server_host }}\"'"
     when:
       - redis_server_host|length > 0
-      - is_nonfree_package|bool
+      - is_nonfree_package | bool
     notify: restart-ds
 
 
@@ -109,7 +109,7 @@
     ansible.builtin.shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis.port  = \"{{ redis_server_port }}\"'"
     when:
       - redis_server_port
-      - is_nonfree_package|bool
+      - is_nonfree_package | bool
     notify: restart-ds
 
 
@@ -120,11 +120,11 @@
       value: 'true'
       vtype: boolean
     become: yes
-    when: cluster_mode|bool
+    when: cluster_mode | bool
 
   - name: Set up rabbitmq url
     ansible.builtin.shell: "{{ json }} -I -e 'this.rabbitmq.url = \"{{ rabbitmq_server_url }}\"'"
-    when: rabbitmq_server_url|length > 0
+    when: rabbitmq_server_url | length > 0
     notify: restart-ds
 
   - name: Create db if it not exist
@@ -140,7 +140,7 @@
       question: onlyoffice/jwt-enabled
       value: "{{ jwt_enabled }}"
       vtype: boolean
-    when: jwt_enabled|bool
+    when: jwt_enabled | bool
     notify: restart-ds
     
   - name: Set up JWT Secret
@@ -150,8 +150,8 @@
       value: "{{ jwt_secret }}"
       vtype: string
     when: 
-      - jwt_secret|length > 0
-      - jwt_enabled|bool
+      - jwt_secret | length > 0
+      - jwt_enabled | bool
     become: yes
 
   - name: Set up JWT Header
@@ -161,12 +161,12 @@
       value: "{{ jwt_header }}"
       vtype: string
     when: 
-      - jwt_header|length > 0
-      - jwt_enabled|bool
+      - jwt_header | length > 0
+      - jwt_enabled | bool
     become: yes
 
   - name: Start example service
     community.general.supervisorctl:
       name: ds:example
       state: started
-    when: start_example|bool
+    when: start_example | bool
