@@ -6,4 +6,4 @@ nginx_config_path: "/etc/{{ company_name }}/documentserver/nginx/ds.conf"
 
 is_nonfree_package: "{{ 'false' if package_name == 'onlyoffice-documentserver' else 'true' }}"
 
-package_url: ""
+package_url:
