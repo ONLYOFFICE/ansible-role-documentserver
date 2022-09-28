@@ -20,5 +20,16 @@
         name: apt-utils
         update_cache: yes
       when: ansible_os_family == "Debian"
-      changed_when: false
-      failed_when: false
+
+    - name: Install nginx
+      apt: 
+        name: nginx
+      when: ansible_os_family == "Debian"
+
+    - name: restart-nginx
+      ansible.builtin.service:
+        name: "nginx"
+        state: restarted
+      become: yes
+      when: ansible_os_family == "Debian" 
+
