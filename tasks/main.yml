@@ -23,7 +23,7 @@
   when:  proto == "https"
 
 - name: Supply license file
-  ansible.builtin.template:
+  ansible.builtin.copy:
     content: "{{ onlyoffice_license }}"
     dest: /var/www/onlyoffice/Data/license.lic
     owner: root
