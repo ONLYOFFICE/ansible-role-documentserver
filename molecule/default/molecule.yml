@@ -6,7 +6,7 @@ driver:
 platforms:
   - name: "${MOLECULE_DISTRO:-ubuntu2004}"
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu2004}-ansible:latest"
-    command: ${MOLECULE_DOCKER_COMMAND:-"cat /etc/os-release | if  grep -e ID_LIKE=debian > /dev/null 2>&1; then apt-get update && apt-get install apt-utils; fi"}
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
