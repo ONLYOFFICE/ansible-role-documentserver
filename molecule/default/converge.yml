@@ -40,7 +40,7 @@
     cert_file: "test.crt"
 
   roles:
-    - geerlingguy.postgresql
+    - geerlingguy.postgresql-3.1.1
     - onlyoffice.rabbitmq
     - geerlingguy.redis
     - ansible-role-documentserver
