@@ -27,4 +27,4 @@
     community.general.supervisorctl:
       name: ds:example
       state: started
-    when: start_example|bool
+    when: start_example | bool

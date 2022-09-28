@@ -2,5 +2,5 @@
 roles:
 - src: geerlingguy.redis
 - src: geerlingguy.postgresql
-  version: 3.1.1
+  version: 3.3.0
 - src: onlyoffice.rabbitmq
