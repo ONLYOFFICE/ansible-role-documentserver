@@ -95,6 +95,8 @@
       name: "{{ package_name }}"
       update_cache: yes
       state: latest
+    environment: 
+      DEBIAN_FRONTEND: noninteractive
     become: yes
 
   - name: Set up redis host name
