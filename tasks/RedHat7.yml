@@ -23,11 +23,11 @@
       update_cache: yes
       state: latest
     become: yes
-    when: package_url | lenght == 0
+    when: package_url | length == 0
 
   - name: Install the Documentserver from URL
     ansible.builtin.yum:
       name: "{{ package_url }}"
       state: present
       validate_certs: yes
-    when: package_url | lenght > 0
+    when: package_url | length > 0
