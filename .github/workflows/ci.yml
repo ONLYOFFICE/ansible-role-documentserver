@@ -16,11 +16,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        distro: ["centos7", "centos8", "debian9", "debian10", "debian11", "ubuntu1604", "ubuntu1804", "ubuntu2004"]
-        proto: [ "http", "https" ]
-        include: 
-          - distro: "centos7"
-            package: "https://s3.eu-west-1.amazonaws.com/repo-doc-onlyoffice-com/onlyoffice/testing/ubuntu14/centos/onlyoffice-documentserver-7.2.1-4.x86_64.rpm"
+        distro:
+          - centos7
+          - centos8
+          - debian9
+          - debian10
+          - debian11
+          - ubuntu1604
+          - ubuntu1804
+          - ubuntu2004
+        proto:
+          - http
+          - https 
+        include:
+          - distro: centos7
+            proto: ""
+            package: 
+          - distro: centos8
+            proto: ""
+            package: 
 
     steps:
       - name: Check out the codebase.
@@ -42,7 +56,6 @@ jobs:
           openssl genrsa -out ${PWD}/files/test.key 2048
           openssl req -new -key ${PWD}/files/test.key -out ${PWD}/files/test.csr -subj "/C=RU/ST=NizhObl/L=NizhNov/O=RK-Tech/OU=TestUnit/CN=TestName"
           openssl x509 -req -days 365 -in ${PWD}/files/test.csr -signkey ${PWD}/files/test.key -out ${PWD}/files/test.crt
-
       - name: Run Molecule tests.
         run: molecule test
         env:
@@ -51,4 +64,4 @@ jobs:
           MOLECULE_NO_LOG: 'false'
           MOLECULE_PACKAGE: ${{ matrix.package }}
           MOLECULE_DISTRO: ${{ matrix.distro }}
-          MOLECULE_PROTO: ${{ matrix.proto }}
+          MOLECULE_PROTO: ${{ matrix.proto}}

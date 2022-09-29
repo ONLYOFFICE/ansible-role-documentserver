@@ -14,7 +14,7 @@ platforms:
 provisioner:
   name: ansible
   env:
-    PACKAGE: ${MOLECULE_PACKAGE}
+    PACKAGE: ${MOLECULE_PACKAGE:-""}
     PROTO: ${MOLECULE_PROTO:-http}
     MOLECULE_NO_LOG: ${MOLECULE_NO_LOG:-true}
 verifier:
