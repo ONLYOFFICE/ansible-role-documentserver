@@ -33,6 +33,7 @@
     proto: "{{ lookup('env', 'PROTO') }}"
     key_file: "test.key"
     cert_file: "test.crt"
+    package_url: "{{ lookup('env', 'PACKAGE') }}"
 
   roles:
     - geerlingguy.postgresql

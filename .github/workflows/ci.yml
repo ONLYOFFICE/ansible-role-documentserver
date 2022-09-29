@@ -27,7 +27,12 @@ jobs:
           - ubuntu2004
         proto:
           - http
-          - https  
+          - https 
+        include: 
+          - distro: cento7 centos8
+            package: ""
+          - distro: centos7 centos8
+            package: "https://s3.eu-west-1.amazonaws.com/repo-doc-onlyoffice-com/onlyoffice/testing/ubuntu14/centos/onlyoffice-documentserver-7.2.1-4.x86_64.rpm"
 
     steps:
       - name: Check out the codebase.
@@ -58,3 +63,4 @@ jobs:
           MOLECULE_NO_LOG: 'false'
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_PROTO: ${{ matrix.proto}}
+          MOLECULE_PACKAGE: ${{ matrix.package }}

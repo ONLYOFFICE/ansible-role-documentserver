@@ -25,6 +25,5 @@ cert_file: "~/certs/tls.crt"
 cluster_mode: false
 start_example: false
 
-# Also you can install package from set url
-package_url: ""
+package_url: 
 
