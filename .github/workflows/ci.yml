@@ -56,6 +56,7 @@ jobs:
           openssl genrsa -out ${PWD}/files/test.key 2048
           openssl req -new -key ${PWD}/files/test.key -out ${PWD}/files/test.csr -subj "/C=RU/ST=NizhObl/L=NizhNov/O=RK-Tech/OU=TestUnit/CN=TestName"
           openssl x509 -req -days 365 -in ${PWD}/files/test.csr -signkey ${PWD}/files/test.key -out ${PWD}/files/test.crt
+
       - name: Run Molecule tests.
         run: molecule test
         env:
