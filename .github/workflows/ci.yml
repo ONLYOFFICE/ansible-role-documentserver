@@ -30,9 +30,9 @@ jobs:
           - https 
         include: 
           - distro: centos7
-            package: ["", "https://s3.eu-west-1.amazonaws.com/repo-doc-onlyoffice-com/onlyoffice/testing/ubuntu14/centos/onlyoffice-documentserver-7.2.1-4.x86_64.rpm"]
+            package: https://s3.eu-west-1.amazonaws.com/repo-doc-onlyoffice-com/onlyoffice/testing/ubuntu14/centos/onlyoffice-documentserver-7.2.1-4.x86_64.rpm
           - distro: centos8
-            package: ["", "https://s3.eu-west-1.amazonaws.com/repo-doc-onlyoffice-com/onlyoffice/testing/ubuntu14/centos/onlyoffice-documentserver-7.2.1-4.x86_64.rpm"]
+            package: https://s3.eu-west-1.amazonaws.com/repo-doc-onlyoffice-com/onlyoffice/testing/ubuntu14/centos/onlyoffice-documentserver-7.2.1-4.x86_64.rpm
 
     steps:
       - name: Check out the codebase.
