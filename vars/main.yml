@@ -5,6 +5,3 @@ certs_directory: "/var/www/{{ company_name }}/Data/certs/"
 nginx_config_path: "/etc/{{ company_name }}/documentserver/nginx/ds.conf"
 
 is_nonfree_package: "{{ 'false' if package_name == 'onlyoffice-documentserver' else 'true' }}"
-
-# Uncomment and set variable if you need install package from URL
-#package_url: ""
