@@ -18,9 +18,17 @@
       - { name: "{{ nginx_repo }}", state: present }
     become: yes
 
-  - name: Install documentserver
+  - name: Install documentserver from repo
     ansible.builtin.dnf:
       name: "{{ package_name }}"
       update_cache: yes
       state: latest
     become: yes
+
+  - name: Install the Documentserver from URL
+    ansible.builtin.dnf:
+      name: "{{ package_url }}"
+      state: present
+      validate_certs: yes
+      disable_gpg_check: yes
+    when: package_url | length > 0

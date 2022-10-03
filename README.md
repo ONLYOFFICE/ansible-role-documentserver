@@ -33,9 +33,17 @@ The new user name with superuser permissions for the PostgreSQL account.
 
 The password set for the PostgreSQL account.
 
+    company_name: onlyoffice
+
+NOTE: This is service variable, leave this as the default.
+
     package_name: onlyoffice-documentserver
 
 The package name of the ONLYOFFICE Document Server.
+
+    product_edition: ""
+
+In this variable you can set the edition of the package being installed. Available values "" or "-ee"   
 
     redis_server_host: localhost
 
@@ -92,6 +100,10 @@ The option to enable or disable cluster mode.
     start_example: false
 
 The option for starting example service after install.
+
+    package_url: "" 
+
+The option for to be able to install the package by URL.
 
 ## Dependencies
 

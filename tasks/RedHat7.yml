@@ -17,9 +17,17 @@
       - { name: "{{ nginx_repo }}", state: present }
     become: yes
 
-  - name: Install documentserver
+  - name: Install documentserver from repo
     ansible.builtin.yum:
       name: "{{ package_name }}"
       update_cache: yes
       state: latest
     become: yes
+    when: package_url | length == 0
+
+  - name: Install the Documentserver from URL
+    ansible.builtin.yum:
+      name: "{{ package_url }}"
+      state: present
+      validate_certs: yes
+    when: package_url | length > 0
