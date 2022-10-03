@@ -45,8 +45,11 @@ The package name of the ONLYOFFICE Document Server.
 
 In this variable you can set the edition of the package being installed. 
 Available values: 
-"" - Community edition
+
+"" - Community edition (default)
+
 "-ee" - Enterprise edition
+
 "-de" - Developer edition
 
     redis_server_host: localhost
