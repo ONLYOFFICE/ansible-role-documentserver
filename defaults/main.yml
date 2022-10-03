@@ -3,9 +3,8 @@ db_server_name: onlyoffice
 db_server_user: onlyoffice
 db_server_pass: onlyoffice
 
-company_name: "onlyoffice"
 product_edition: ""
-package_name: "{{ company_name }}-documentserver{{ product_edition }}"
+package: "onlyoffice-documentserver"
 
 redis_server_host: localhost
 redis_server_port: 6379

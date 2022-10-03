@@ -1,3 +1,7 @@
+company_name: "onlyoffice"
+
+package_name: "{{ package }}{{ product_edition }}" 
+
 rabbitmq_server_url: "amqp://{{ rabbitmq_server_user }}:{{ rabbitmq_server_pass }}@{{ rabbitmq_server_host }}{{ rabbitmq_server_vpath }}"
 
 certs_directory: "/var/www/{{ company_name }}/Data/certs/"
