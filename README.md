@@ -43,7 +43,7 @@ The package name of the ONLYOFFICE Document Server.
 
     product_edition: ""
 
-In this variable you can set the edition of the package being installed. Available values "" or "-ee"   
+In this variable you can set the edition of the package being installed. Available values: "" | "-ee" | "-de".
 
     redis_server_host: localhost
 
