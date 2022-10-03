@@ -33,7 +33,7 @@ The new user name with superuser permissions for the PostgreSQL account.
 
 The password set for the PostgreSQL account.
 
-    package_name: onlyoffice-documentserver
+    package: onlyoffice-documentserver
 
 The package name of the ONLYOFFICE Document Server.
 
