@@ -33,10 +33,6 @@ The new user name with superuser permissions for the PostgreSQL account.
 
 The password set for the PostgreSQL account.
 
-    company_name: onlyoffice
-
-NOTE: This is service variable, leave this as the default.
-
     package_name: onlyoffice-documentserver
 
 The package name of the ONLYOFFICE Document Server.
