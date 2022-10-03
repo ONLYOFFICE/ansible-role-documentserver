@@ -1,6 +1,6 @@
 ---
   - name: Create certs directory
-    file:
+    ansible.builtin.file:
             path: "{{ certs_directory }}"
             state: directory
             owner: root
@@ -10,7 +10,7 @@
 
 
   - name: Copy key to server
-    copy:
+    ansible.builtin.copy:
             src: "{{ key_file }}"
             dest: "{{ certs_directory + 'tls.key' }}"
             owner: root
@@ -19,7 +19,7 @@
     become: yes
 
   - name: Copy certificate to server
-    copy:
+    ansible.builtin.copy:
             src: "{{ cert_file }}"
             dest: "{{ certs_directory + 'tls.crt' }}"
             owner: root
@@ -28,25 +28,25 @@
     become: yes
 
   - name: Copy ds.conf template
-    command: cp -f /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl "{{ nginx_config_path }}"
+    ansible.builtin.command: cp -f /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl "{{ nginx_config_path }}"
     become: yes
     register: myoutput
     changed_when: myoutput.rc != 0
 
   - name: Edit ssl cert path
-    lineinfile:
+    ansible.builtin.lineinfile:
             path: "{{ nginx_config_path }}" 
             regexp: "SSL_CERTIFICATE_PATH"
             line: "  ssl_certificate {{ certs_directory + 'tls.crt' }};"
     become: yes
 
   - name: Edit ssl key path
-    lineinfile:
+    ansible.builtin.lineinfile:
             path: "{{ nginx_config_path }}" 
             regexp: "SSL_KEY_PATH"
             line: "  ssl_certificate_key {{ certs_directory + 'tls.key' }};"
     notify: 
-        restart-nginx
+        Restart-nginx
     become: yes
 
  
