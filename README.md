@@ -33,20 +33,9 @@ The new user name with superuser permissions for the PostgreSQL account.
 
 The password set for the PostgreSQL account.
 
-    package: onlyoffice-documentserver
+    package_name: onlyoffice-documentserver
 
 The package name of the ONLYOFFICE Document Server.
-
-    product_edition: ""
-
-In this variable you can set the edition of the package being installed. 
-Available values: 
-
-"" - Community edition (default)
-
-"-ee" - Enterprise edition
-
-"-de" - Developer edition
 
     redis_server_host: localhost
 
