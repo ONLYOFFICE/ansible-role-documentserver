@@ -3,7 +3,7 @@ db_server_name: onlyoffice
 db_server_user: onlyoffice
 db_server_pass: onlyoffice
 
-package_name: "onlyoffice-documentserver"
+package_name: onlyoffice-documentserver
 
 redis_server_host: localhost
 redis_server_port: 6379
