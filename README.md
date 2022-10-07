@@ -99,48 +99,52 @@ The option for starting example service after install.
 
 ## Example Playbook
 
-    - hosts: all
+  - hosts: all
 
     vars:
-        postgresql_global_config_options:
+      nginx_worker_connections: "768"
+      nginx_keepalive_timeout: "65"
+      nginx_server_tokens: "off"
+
+      postgresql_global_config_options:
         - option: listen_addresses
-            value: "*"
+          value: "*"
         - option: unix_socket_directories
-            value: '{{ postgresql_unix_socket_directories | join(",") }}'
+          value: '{{ postgresql_unix_socket_directories | join(",") }}'
 
-        postgresql_hba_entries:
+      postgresql_hba_entries:
         - type: local
-            database: all
-            user: postgres
-            auth_method: peer
+          database: all
+          user: postgres
+          auth_method: peer
         - type: local
-            database: all
-            user: all
-            auth_method: peer 
+          database: all
+          user: all
+          auth_method: peer 
         - type: host
-            database: all
-            user: all
-            address: 127.0.0.1/32
-            auth_method: md5
+          database: all
+          user: all
+          address: 127.0.0.1/32
+          auth_method: md5
         - type: host
-            database: all
-            user: all
-            address: ::1/128
-            auth_method: md5
+          database: all
+          user: all
+          address: ::1/128
+          auth_method: md5
         - type: host
-            database: all
-            user: all
-            address: 0.0.0.0/0
-            auth_method: md5
+          database: all
+          user: all
+          address: 0.0.0.0/0
+          auth_method: md5
 
-        postgresql_databases:
+      postgresql_databases:
         - name: "{{ db_server_name }}"
 
-        postgresql_users:
+      postgresql_users:
         - name: "{{ db_server_user }}"
             password: "{{ db_server_pass }}"
 
-        rabbitmq_users:
+      rabbitmq_users:
         - name: "{{ rabbitmq_server_user }}"
             password: "{{ rabbitmq_server_pass }}"
             vhost: "{{ rabbitmq_server_vpath }}"
@@ -149,15 +153,16 @@ The option for starting example service after install.
             write_priv: .*
             tags: administrator
 
-        rabbitmq_users_remove: []
+      rabbitmq_users_remove: []
 
-        redis_bind_interface: 0.0.0.0
+      redis_bind_interface: 0.0.0.0
 
     roles:
-        - geerlingguy.postgresql
-        - ONLYOFFICE.rabbitmq
-        - geerlingguy.redis
-        - ONLYOFFICE.documentserver
+      - geerlingguy.nginx
+      - geerlingguy.postgresql
+      - ONLYOFFICE.rabbitmq
+      - geerlingguy.redis
+      - ONLYOFFICE.documentserver
 
 ## License
 

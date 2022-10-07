@@ -2,6 +2,10 @@
 - name: Converge
   hosts: all
   vars:
+    nginx_worker_connections: "768"
++   nginx_keepalive_timeout: "65"
++   nginx_server_tokens: "off"
+
     postgresql_global_config_options:
       - option: listen_addresses
         value: "*"
@@ -9,6 +13,7 @@
         value: '{{ postgresql_unix_socket_directories | join(",") }}'
       - option: log_directory
         value: 'log'
+
     postgresql_hba_entries:
       - { type: local, database: all, user: postgres, auth_method: peer }
       - { type: local, database: all, user: all, auth_method: peer }
@@ -21,8 +26,6 @@
     postgresql_users:
       - name: "{{ db_server_user }}"
         password: "{{ db_server_pass }}"
-
-
 
     rabbitmq_users:
       - name: "{{ rabbitmq_server_user }}"
@@ -42,6 +45,7 @@
     cert_file: "test.crt"
 
   roles:
+    - geerlingguy.nginx
     - geerlingguy.postgresql
     - onlyoffice.rabbitmq
     - geerlingguy.redis
