@@ -3,8 +3,8 @@
   hosts: all
   vars:
     nginx_worker_connections: "768"
-+   nginx_keepalive_timeout: "65"
-+   nginx_server_tokens: "off"
+    nginx_keepalive_timeout: "65"
+    nginx_server_tokens: "off"
 
     postgresql_global_config_options:
       - option: listen_addresses
