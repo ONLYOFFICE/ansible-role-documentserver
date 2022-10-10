@@ -2,6 +2,10 @@
 - name: Converge
   hosts: all
   vars:
+    nginx_worker_connections: "768"
+    nginx_keepalive_timeout: "65"
+    nginx_server_tokens: "off"
+
     postgresql_global_config_options:
       - option: listen_addresses
         value: "*"
@@ -22,9 +26,9 @@
       - name: "{{ db_server_user }}"
         password: "{{ db_server_pass }}"
 
-  
 
-   rabbitmq_users:
+
+    rabbitmq_users:
       - name: "{{ rabbitmq_server_user }}"
         password: "{{ rabbitmq_server_pass }}"
         vhost: "{{ rabbitmq_server_vpath }}"
