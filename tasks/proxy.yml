@@ -1,6 +1,6 @@
 - name: Remove default ds.conf file
   ansible.builtin.file:
-    path: "{{ ds_conf_path}}"
+    path: "{{ ds_conf_path }}"
     state: absent
   notify: restart nginx
 
