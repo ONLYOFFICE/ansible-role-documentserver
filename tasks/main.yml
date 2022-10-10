@@ -23,7 +23,7 @@
   when:  proto == "https"
 
 - name: Include virtual path proxy
-  ansible.builtin.include_tasks: ds_proxy.yml
+  ansible.builtin.include_tasks: proxy.yml
   when: ds_proxy_enabled | bool
 
 - name: Supply license file

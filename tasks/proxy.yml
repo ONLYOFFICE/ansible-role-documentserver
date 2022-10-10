@@ -1,11 +1,11 @@
 - name: Remove default ds.conf file
-  file:
+  ansible.builtin.file:
     path: "{{ ds_conf_path}}"
     state: absent
   notify: restart nginx
 
 - name: Copy nginx configuration in place.
-  template:
+  ansible.builtin.template:
     src: "{{ ds_proxy_template }}"
     dest: "{{ ds_conf_path }}"
     owner: root
