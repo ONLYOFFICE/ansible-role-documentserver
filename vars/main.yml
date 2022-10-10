@@ -5,3 +5,7 @@ certs_directory: "/var/www/onlyoffice/Data/certs/"
 nginx_config_path: "/etc/onlyoffice/documentserver/nginx/ds.conf"
 
 is_nonfree_package: "{{ 'false' if package_name == 'onlyoffice-documentserver' else 'true' }}"
+
+ds_conf_path: "/etc/nginx/conf.d/ds.conf"
+
+root_group: root

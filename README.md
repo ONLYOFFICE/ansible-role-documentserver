@@ -106,6 +106,9 @@ The option for starting example service after install.
         nginx_keepalive_timeout: "65"
         nginx_server_tokens: "off"
 
+        ds_proxy_enabled: false
+        ds_proxy_path: <your_path>
+
         postgresql_global_config_options:
           - option: listen_addresses
             value: "*"

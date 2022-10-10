@@ -22,6 +22,10 @@
   ansible.builtin.include_tasks: ssl.yml
   when:  proto == "https"
 
+- name: Include virtual path proxy
+  ansible.builtin.include_tasks: ds_proxy.yml
+  when: ds_proxy_enabled | bool
+
 - name: Supply license file
   ansible.builtin.template:
     content: "{{ onlyoffice_license }}"
