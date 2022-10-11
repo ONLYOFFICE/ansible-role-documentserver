@@ -97,13 +97,15 @@ The option for starting example service after install.
 
 Option to enable the start of the document server behind a proxy.
 
-   ds_proxy_template: ds.conf.j2
+    ds_proxy_template: ds.conf.j2
 
 You can override the template used to generate the proxy configuration file.
 
-   ds_proxy_path: "documentserver_backend"
+    ds_proxy_path: "documentserver_backend"
 
-This option specifies the virtual directory for your document server running behind a proxy. For example: <your_server_address>/documentserver_backend/
+This option specifies the virtual directory for your document server running behind a proxy. For example:
+   
+    <your_server_address>/documentserver_backend/
 
 ## Dependencies
 
