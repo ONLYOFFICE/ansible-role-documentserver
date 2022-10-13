@@ -95,7 +95,7 @@ The option for starting example service after install.
 
     package_url: "" 
 
-The option for to be able to install the package by URL.
+The option for being able to install the package by URL..
 
 ## Dependencies
 
