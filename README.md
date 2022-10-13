@@ -93,6 +93,10 @@ The option to enable or disable cluster mode.
 
 The option for starting example service after install.
 
+    package_url: "" 
+
+The option for being able to install the package by URL.
+
 ## Dependencies
 
     None.
