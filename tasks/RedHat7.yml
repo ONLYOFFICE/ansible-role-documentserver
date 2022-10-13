@@ -25,7 +25,7 @@
     become: yes
     when: package_url | length == 0
 
-  - name: Install the Documentserver from URL
+  - name: Install the documentserver by URL
     ansible.builtin.yum:
       name: "{{ package_url }}"
       state: present

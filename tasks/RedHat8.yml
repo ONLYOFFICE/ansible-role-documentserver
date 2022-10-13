@@ -25,7 +25,7 @@
       state: latest
     become: yes
 
-  - name: Install the Documentserver from URL
+  - name: Install the documentserver by URL
     ansible.builtin.dnf:
       name: "{{ package_url }}"
       state: present
