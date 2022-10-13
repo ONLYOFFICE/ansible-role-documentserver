@@ -18,7 +18,7 @@
     become: yes
 
   - name: Set ds server port (if configured)
-    lineinfile:
+    lansible.builtin.ineinfile:
       path: /root/.bashrc
       line: export DS_PORT={{ ds_server_port }}
     when:

@@ -19,7 +19,7 @@
     become: yes
 
   - name: Set ds server port (if configured)
-    lineinfile:
+    ansible.builtin.lineinfile:
       path: /root/.bashrc
       line: export DS_PORT={{ ds_server_port }}
     when:
