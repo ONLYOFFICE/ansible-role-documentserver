@@ -51,7 +51,17 @@
       value: 'true'
       vtype: boolean
     become: yes
-    
+
+  - name: Set up ds server port
+    ansible.builtin.debconf:
+      name: "{{ package_name }}"
+      question: onlyoffice/ds-port
+      value: "{{ ds_server_port }}"
+      vtype: string
+    when:
+      - ds_server_port
+    become: yes
+
   - name: Set up db host name
     ansible.builtin.debconf:
       name: "{{ package_name }}"

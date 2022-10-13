@@ -18,6 +18,14 @@
       - { name: "{{ nginx_repo }}", state: present }
     become: yes
 
+   - name: Set ds server port (if configured)
+    lineinfile:
+      path: /root/.bashrc
+      line: export DS_PORT={{ ds_server_port }}
+    when:
+      - ds_server_port
+    become: yes
+
   - name: Install documentserver from repo
     ansible.builtin.dnf:
       name: "{{ package_name }}"

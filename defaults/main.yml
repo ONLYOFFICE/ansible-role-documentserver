@@ -1,3 +1,5 @@
+ds_server_port: ""
+
 db_server_host: localhost
 db_server_name: onlyoffice
 db_server_user: onlyoffice
