@@ -166,7 +166,6 @@ The option for being able to install the package by URL.
         - ONLYOFFICE.rabbitmq
         - geerlingguy.redis
         - ONLYOFFICE.documentserver
-        - geerlingguy.nginx
 
 ## License
 
