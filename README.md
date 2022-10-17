@@ -17,7 +17,7 @@ Installation requires PostgreSQL, RabbitMQ and Redis server in the system or net
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    ds_server_port: ""
+    ds_port: ""
 
 The port where documentserver is running, if you do not set this variable, documentserver is will be runned on port `80` by default.
 

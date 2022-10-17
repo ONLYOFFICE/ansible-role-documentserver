@@ -20,9 +20,9 @@
   - name: Set ds server port (if configured)
     ansible.builtin.lineinfile:
       path: /root/.bashrc
-      line: export DS_PORT={{ ds_server_port }}
+      line: export DS_PORT={{ ds_port }}
     when:
-      - ds_server_port
+      - ds_port
     become: yes
 
   - name: Install documentserver from repo

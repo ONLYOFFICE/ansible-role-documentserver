@@ -56,7 +56,7 @@
     ansible.builtin.debconf:
       name: "{{ package_name }}"
       question: onlyoffice/ds-port
-      value: "{{ ds_server_port }}"
+      value: "{{ ds_port }}"
       vtype: string
     when:
       - ds_server_port

@@ -1,5 +1,3 @@
-ds_server_port: ""
-
 db_server_host: localhost
 db_server_name: onlyoffice
 db_server_user: onlyoffice
@@ -26,3 +24,4 @@ cluster_mode: false
 start_example: false
 
 package_url: ""
+ds_port: ""
