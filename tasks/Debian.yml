@@ -52,7 +52,7 @@
       vtype: boolean
     become: yes
 
-  - name: Set up ds server port
+  - name: Set up ds port (if configured)
     ansible.builtin.debconf:
       name: "{{ package_name }}"
       question: onlyoffice/ds-port

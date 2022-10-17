@@ -18,7 +18,7 @@
       - { name: "{{ nginx_repo }}", state: present }
     become: yes
 
-  - name: Set ds server port (if configured)
+  - name: Set ds port (if configured)
     ansible.builtin.lineinfile:
       path: /root/.bashrc
       line: export DS_PORT={{ ds_port }}
