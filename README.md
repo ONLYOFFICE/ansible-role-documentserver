@@ -19,7 +19,7 @@ Available variables are listed below, along with default values (see `defaults/m
 
     ds_port: ""
 
-The port where documentserver is running, if you do not set this variable, documentserver is will be runned on port `80` by default.
+The port where documentserver is running, if you do not set this variable, documentserver is will be runned by default on port `80`.
 
     db_server_host: localhost
 
