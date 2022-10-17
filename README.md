@@ -108,7 +108,7 @@ The option for being able to install the package by URL.
 ## Example Playbook
 
     - hosts: all
-    
+
     vars:
         postgresql_global_config_options:
         - option: listen_addresses
