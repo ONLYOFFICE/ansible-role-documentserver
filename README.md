@@ -108,50 +108,48 @@ The option for being able to install the package by URL.
 ## Example Playbook
 
     - hosts: all
-
-      vars:
+    
+    vars:
         postgresql_global_config_options:
-          - option: listen_addresses
+        - option: listen_addresses
             value: "*"
-          - option: unix_socket_directories
+        - option: unix_socket_directories
             value: '{{ postgresql_unix_socket_directories | join(",") }}'
-          - option: log_directory
-            value: 'log'
 
         postgresql_hba_entries:
-          - type: local
+        - type: local
             database: all
             user: postgres
             auth_method: peer
-          - type: local
+        - type: local
             database: all
             user: all
             auth_method: peer 
-          - type: host
+        - type: host
             database: all
             user: all
             address: 127.0.0.1/32
             auth_method: md5
-          - type: host
+        - type: host
             database: all
             user: all
             address: ::1/128
             auth_method: md5
-          - type: host
+        - type: host
             database: all
             user: all
             address: 0.0.0.0/0
             auth_method: md5
 
         postgresql_databases:
-          - name: "{{ db_server_name }}"
+        - name: "{{ db_server_name }}"
 
         postgresql_users:
-          - name: "{{ db_server_user }}"
+        - name: "{{ db_server_user }}"
             password: "{{ db_server_pass }}"
 
         rabbitmq_users:
-          - name: "{{ rabbitmq_server_user }}"
+        - name: "{{ rabbitmq_server_user }}"
             password: "{{ rabbitmq_server_pass }}"
             vhost: "{{ rabbitmq_server_vpath }}"
             configure_priv: .*
@@ -163,11 +161,12 @@ The option for being able to install the package by URL.
 
         redis_bind_interface: 0.0.0.0
 
-      roles:
+    roles:
         - geerlingguy.postgresql
         - ONLYOFFICE.rabbitmq
         - geerlingguy.redis
         - ONLYOFFICE.documentserver
+        - geerlingguy.nginx
 
 ## License
 
