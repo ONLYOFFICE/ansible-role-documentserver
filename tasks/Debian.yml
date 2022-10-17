@@ -59,7 +59,7 @@
       value: "{{ ds_port }}"
       vtype: string
     when:
-      - ds_server_port
+      - ds_port
     become: yes
 
   - name: Set up db host name
