@@ -10,6 +10,6 @@
 
 ### Fixes
 
-* Updated sample playbook structure spaces
+* Updated padding in sample playbook
 * Added `log_directory` postgresql variables for fix typical [issue](https://github.com/geerlingguy/ansible-role-mysql/issues/175),
   and the correct operation of the dependent role
