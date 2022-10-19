@@ -30,7 +30,7 @@
     line: '  allow {{ ds_info_allow }};'
   when: ds_info_allow
   notify:
-      restart-nginx
+      Restart-nginx
 
 - name: Supply license file
   ansible.builtin.template:
