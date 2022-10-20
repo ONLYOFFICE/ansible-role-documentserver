@@ -175,7 +175,7 @@
       - jwt_enabled | bool
     become: yes
 
-  - name: "Configure {{ onlyoffice_default_config }} ..."
+  - name: "Configure {{ onlyoffice_default_config }}"
     block:
       - name: "Read {{ onlyoffice_default_config }}"
         ansible.builtin.command: "cat {{ onlyoffice_default_config }}"
