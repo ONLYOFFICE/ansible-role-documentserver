@@ -29,7 +29,7 @@
     ansible.builtin.yum:
       name: "{{ package_name }}"
       update_cache: yes
-      state: latest
+      state: "{{ package_state }}"
     become: yes
     when: package_url | length == 0
 

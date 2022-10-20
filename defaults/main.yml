@@ -4,6 +4,8 @@ db_server_user: onlyoffice
 db_server_pass: onlyoffice
 
 package_name: onlyoffice-documentserver
+# set this to 'present' in order to prevent upgrades
+package_state: latest
 
 redis_server_host: localhost
 redis_server_port: 6379

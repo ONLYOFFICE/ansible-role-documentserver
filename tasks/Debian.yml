@@ -104,7 +104,7 @@
     ansible.builtin.apt: 
       name: "{{ package_name }}"
       update_cache: yes
-      state: latest
+      state: "{{ package_state }}"
     become: yes
 
   - name: Set up redis host name

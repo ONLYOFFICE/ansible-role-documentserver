@@ -41,6 +41,10 @@ The password set for the PostgreSQL account.
 
 The package name of the ONLYOFFICE Document Server.
 
+    package_state: latest | present
+
+The package state of the ONLYOFFICE Document Server. If set to latest (default), a upgrade will be performed!
+
     redis_server_host: localhost
 
 The IP address or the name of the host where the Redis server is running.
