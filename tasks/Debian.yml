@@ -176,6 +176,7 @@
     become: yes
 
   - name: "Configure {{ onlyoffice_default_config }}"
+    when: onlyoffice_local_json
     block:
       - name: "Read {{ onlyoffice_default_config }}"
         ansible.builtin.command: "cat {{ onlyoffice_default_config }}"
@@ -193,7 +194,6 @@
           dest: "{{ onlyoffice_default_config }}"
           content: "{{ current_onlyoffice_local_json | combine(onlyoffice_local_json, recursive=true) | to_nice_json(indent=2, sort_keys=false) }}\n"
         notify: Restart-ds
-    when: onlyoffice_local_json
 
   - name: Start example service
     community.general.supervisorctl:
