@@ -193,6 +193,7 @@
         ansible.builtin.copy:
           dest: "{{ onlyoffice_default_config }}"
           content: "{{ current_onlyoffice_local_json | combine(onlyoffice_local_json, recursive=true) | to_nice_json(indent=2, sort_keys=false) }}\n"
+          mode: 0644
         notify: Restart-ds
 
   - name: Start example service
