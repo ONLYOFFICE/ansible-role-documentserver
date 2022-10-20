@@ -22,6 +22,16 @@
   ansible.builtin.include_tasks: ssl.yml
   when:  proto == "https"
 
+- name: Enable /info page acl
+  ansible.builtin.lineinfile:
+    path: "{{ nginx_include_path }}/{{ nginx_docservice_file }}"
+    insertafter: 'location ~* ^(\/[\d]+\.[\d]+\.[\d]+[\.|-][\d]+)?\/(info)(\/.*)$ {'
+    search_string: 'allow'
+    line: '  allow {{ ds_info_allow }};'
+  when: ds_info_allow
+  notify:
+      Restart-nginx
+
 - name: Supply license file
   ansible.builtin.template:
     content: "{{ onlyoffice_license }}"

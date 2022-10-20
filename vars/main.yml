@@ -5,5 +5,7 @@ rabbitmq_server_url: "amqp://{{ rabbitmq_server_user }}:{{ rabbitmq_server_pass 
 certs_directory: "/var/www/{{ company_name }}/Data/certs/"
 
 nginx_config_path: "/etc/{{ company_name }}/documentserver/nginx/ds.conf"
+nginx_include_path: "/etc/nginx/includes"
+nginx_docservice_file: "ds-docservice.conf"
 
 is_nonfree_package: "{{ 'false' if package_name == 'onlyoffice-documentserver' else 'true' }}"
