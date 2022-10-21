@@ -27,13 +27,22 @@ onlyoffice_local_json: {}
 #         session:
 #           string: xxyyzz
 
-# target file to write your local changes
+# target file to write your local json changes
 # you can change the original local.json by using
 #   onlyoffice_local_json_target_file: "{{ onlyoffice_default_config }}"
 # or use a extra file according to https://github.com/node-config/node-config/wiki/Configuration-Files#file-load-order
 #   onlyoffice_local_json_target_file: "{{ onlyoffice_default_config | dirname }}/local-production-linux.json"
 onlyoffice_local_json_target_file: "{{ onlyoffice_default_config | dirname }}/local-production-linux.json"
 
+# how to handle your onlyoffice_local_json settings:
+# onlyoffice_local_json_merge: true
+#    means reading the original settinsg from the `onlyoffice_default_config` file
+#    and merge your local changs from `onlyoffice_local_json` into the settings
+#    before writing them to the `onlyoffice_local_json_target_file`
+# onlyoffice_local_json_merge: false
+#    means that only the settings you defined in `onlyoffice_local_json` will be
+#    written to the `onlyoffice_local_json_target_file`
+onlyoffice_local_json_merge: true
 
 filestorage_mount_path: /var/lib/onlyoffice/documentserver/App_Data/cache/files
 fonts_mount_path: /usr/share/fonts

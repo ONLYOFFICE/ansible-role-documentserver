@@ -184,15 +184,17 @@
         check_mode: false
         changed_when: false
         register: _local_json
+        when: onlyoffice_local_json_merge
 
       - name: Read json
         ansible.builtin.set_fact:
           current_onlyoffice_local_json: "{{ _local_json.stdout | from_json }}"
+        when: onlyoffice_local_json_merge
 
       - name: "Write {{ onlyoffice_default_config }}"
         ansible.builtin.copy:
           dest: "{{ onlyoffice_local_json_target_file }}"
-          content: "{{ current_onlyoffice_local_json | combine(onlyoffice_local_json, recursive=true) | to_nice_json(indent=2, sort_keys=false) }}\n"
+          content: "{{ current_onlyoffice_local_json | combine(onlyoffice_local_json | default({}), recursive=true) | to_nice_json(indent=2, sort_keys=false) }}\n"
           mode: 0644
         notify: Restart-ds
 
