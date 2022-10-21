@@ -27,6 +27,13 @@ onlyoffice_local_json: {}
 #         session:
 #           string: xxyyzz
 
+# target file to write your local changes
+# you can change the original local.json by using
+#   onlyoffice_local_json_target_file: "{{ onlyoffice_default_config }}"
+# or use a extra file according to https://github.com/node-config/node-config/wiki/Configuration-Files#file-load-order
+#   onlyoffice_local_json_target_file: "{{ onlyoffice_default_config | dirname }}/local-production-linux.json"
+onlyoffice_local_json_target_file: "{{ onlyoffice_default_config | dirname }}/local-production-linux.json"
+
 
 filestorage_mount_path: /var/lib/onlyoffice/documentserver/App_Data/cache/files
 fonts_mount_path: /usr/share/fonts
