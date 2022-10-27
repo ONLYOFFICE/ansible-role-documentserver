@@ -2,9 +2,11 @@ debian_repo: "deb http://deb.debian.org/debian {{ ansible_distribution_release }
 package_repo: "deb http://download.onlyoffice.com/repo/debian squeeze main"
 
 onlyoffice_default_config: /etc/onlyoffice/documentserver/local.json
+onlyoffice_local_json_config: /etc/onlyoffice/documentserver/local-production-linux.json
 json: /var/www/onlyoffice/documentserver/npm/json -q -f {{ onlyoffice_default_config }}
 
-# allow injecting settings into local.json
+# settings for onlyoffice_local_json_config
+# will be transformed to json
 # attention, intended for experienced users only!
 onlyoffice_local_json: {}
 # example:
