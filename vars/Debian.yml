@@ -2,7 +2,35 @@ debian_repo: "deb http://deb.debian.org/debian {{ ansible_distribution_release }
 package_repo: "deb http://download.onlyoffice.com/repo/debian squeeze main"
 
 onlyoffice_default_config: /etc/onlyoffice/documentserver/local.json
+# see: https://github.com/node-config/node-config/wiki/Configuration-Files#file-load-order
+onlyoffice_local_json_config: /etc/onlyoffice/documentserver/local-production-linux.json
 json: /var/www/onlyoffice/documentserver/npm/json -q -f {{ onlyoffice_default_config }}
+
+# settings for onlyoffice_local_json_config
+# will be transformed to json
+# attention, intended for experienced users only!
+# see: https://github.com/node-config/node-config/wiki/Configuration-Files#arrays-are-merged-by-replacement
+onlyoffice_local_json: {}
+# example:
+# onlyoffice_local_json:
+#   services:
+#     CoAuthoring:
+#       requestDefaults:
+#         rejectUnauthorized: false
+#       token:
+#         enable:
+#           request:
+#             inbox: true
+#             outbox: true
+#           browser: true
+#       secret:
+#         inbox:
+#           string: xxyyzz
+#         outbox:
+#           string: xxyyzz
+#         session:
+#           string: xxyyzz
+
 
 filestorage_mount_path: /var/lib/onlyoffice/documentserver/App_Data/cache/files
 fonts_mount_path: /usr/share/fonts

@@ -175,6 +175,14 @@
       - jwt_enabled | bool
     become: yes
 
+  - name: "Configure {{ onlyoffice_local_json_config }}"
+    ansible.builtin.copy:
+      dest: "{{ onlyoffice_local_json_config }}"
+      content: "{{ onlyoffice_local_json | to_nice_json(indent=2, sort_keys=false) }}\n"
+      mode: 0644
+    when: onlyoffice_local_json
+    notify: Restart-ds
+
   - name: Start example service
     community.general.supervisorctl:
       name: ds:example
