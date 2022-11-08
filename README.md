@@ -109,6 +109,10 @@ The option for being able to install the package by URL.
 
     None.
 
+## Overwriting config values 
+
+The values in the `local.json` file can be redefined. To do this, you need to override the necessary values in the `vars/main.yml` file in the `onlyoffice_local_json: {}` field.
+
 ## Example Playbook
 
     - hosts: all

@@ -9,3 +9,31 @@ nginx_include_path: "/etc/nginx/includes"
 nginx_docservice_file: "ds-docservice.conf"
 
 is_nonfree_package: "{{ 'false' if package_name == 'onlyoffice-documentserver' else 'true' }}"
+
+# see: https://github.com/node-config/node-config/wiki/Configuration-Files#file-load-order
+onlyoffice_local_json_config: /etc/onlyoffice/documentserver/local-production-linux.json
+
+# settings for onlyoffice_local_json_config
+# will be transformed to json
+# attention, intended for experienced users only!
+# see: https://github.com/node-config/node-config/wiki/Configuration-Files#arrays-are-merged-by-replacement
+onlyoffice_local_json: {}
+# example:
+# onlyoffice_local_json:
+#   services:
+#     CoAuthoring:
+#       requestDefaults:
+#         rejectUnauthorized: false
+#       token:
+#         enable:
+#           request:
+#             inbox: true
+#             outbox: true
+#           browser: true
+#       secret:
+#         inbox:
+#           string: xxyyzz
+#         outbox:
+#           string: xxyyzz
+#         session:
+#           string: xxyyzz
