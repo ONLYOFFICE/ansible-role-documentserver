@@ -1,5 +1,5 @@
-debian_repo: "deb http://deb.debian.org/debian {{ ansible_distribution_release }} contrib"
-package_repo: "deb http://download.onlyoffice.com/repo/debian squeeze main"
+debian_repo: "deb https://deb.debian.org/debian {{ ansible_distribution_release }} contrib"
+package_repo: "deb https://download.onlyoffice.com/repo/debian squeeze main"
 
 onlyoffice_default_config: /etc/onlyoffice/documentserver/local.json
 json: /var/www/onlyoffice/documentserver/npm/json -q -f {{ onlyoffice_default_config }}
