@@ -12,6 +12,7 @@
 
 ### Fixes
 
+* Fix [issue](https://github.com/ONLYOFFICE/ansible-role-documentserver/issues/43) with JWT configure on Debian
 * Updated padding in sample playbook
 * Repository links updated for a more secure connection
 * Added `log_directory` postgresql variables for fix typical [issue](https://github.com/geerlingguy/ansible-role-mysql/issues/175),
