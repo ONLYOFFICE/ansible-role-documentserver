@@ -100,6 +100,34 @@
       - not ansible_check_mode
     become: yes
 
+  - name: Set up JWT status
+    become: yes
+    ansible.builtin.debconf:
+      name: "{{ package_name }}"
+      question: onlyoffice/jwt-enabled
+      value: "{{ jwt_enabled }}"
+      vtype: boolean
+
+  - name: Set up JWT Secret
+    ansible.builtin.debconf:
+      name: "{{ package_name }}"
+      question: onlyoffice/jwt-secret
+      value: "{{ jwt_secret }}"
+      vtype: string
+    when:
+      - jwt_secret
+    become: yes
+
+  - name: Set up JWT Header
+    ansible.builtin.debconf:
+      name: "{{ package_name }}"
+      question: onlyoffice/jwt-header
+      value: "{{ jwt_header }}"
+      vtype: string
+    when:
+      - jwt_header
+    become: yes
+
   - name: Install documentserver
     ansible.builtin.apt: 
       name: "{{ package_name }}"
@@ -142,38 +170,6 @@
     register: result
     changed_when: result.rc != 0
     notify: restart-ds
-
-  - name: Set up JWT if needed
-    become: yes
-    ansible.builtin.debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/jwt-enabled
-      value: "{{ jwt_enabled }}"
-      vtype: boolean
-    when: jwt_enabled | bool
-    notify: restart-ds
-    
-  - name: Set up JWT Secret
-    ansible.builtin.debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/jwt-secret
-      value: "{{ jwt_secret }}"
-      vtype: string
-    when: 
-      - jwt_secret | length > 0
-      - jwt_enabled | bool
-    become: yes
-
-  - name: Set up JWT Header
-    ansible.builtin.debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/jwt-header
-      value: "{{ jwt_header }}"
-      vtype: string
-    when: 
-      - jwt_header | length > 0
-      - jwt_enabled | bool
-    become: yes
 
   - name: Start example service
     community.general.supervisorctl:
