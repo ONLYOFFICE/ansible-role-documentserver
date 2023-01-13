@@ -18,22 +18,5 @@ onlyoffice_local_json_config: /etc/onlyoffice/documentserver/local-production-li
 # attention, intended for experienced users only!
 # see: https://github.com/node-config/node-config/wiki/Configuration-Files#arrays-are-merged-by-replacement
 onlyoffice_local_json: {}
-# example:
-# onlyoffice_local_json:
-#   services:
-#     CoAuthoring:
-#       requestDefaults:
-#         rejectUnauthorized: false
-#       token:
-#         enable:
-#           request:
-#             inbox: true
-#             outbox: true
-#           browser: true
-#       secret:
-#         inbox:
-#           string: xxyyzz
-#         outbox:
-#           string: xxyyzz
-#         session:
-#           string: xxyyzz
+# All values that can be overridden can be found here:
+# https://github.com/ONLYOFFICE/server/blob/master/Common/config/default.json
