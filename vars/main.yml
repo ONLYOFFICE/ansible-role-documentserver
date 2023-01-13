@@ -19,4 +19,4 @@ onlyoffice_local_json_config: /etc/onlyoffice/documentserver/local-production-li
 # see: https://github.com/node-config/node-config/wiki/Configuration-Files#arrays-are-merged-by-replacement
 onlyoffice_local_json: {}
 # All values that can be overridden can be found here:
-# https://github.com/ONLYOFFICE/server/blob/master/Common/config/default.json
+# https://helpcenter.onlyoffice.com/installation/docs-developer-configuring.aspx
