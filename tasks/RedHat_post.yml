@@ -25,6 +25,6 @@
 
   - name: Start example service
     ansible.builtin.systemd:
-      name: ds:example
+      name: ds-example
       state: started
     when: start_example | bool
