@@ -1,5 +1,5 @@
   - name: Restart-ds
-    community.general.supervisorctl:
+    ansible.builtin.systemd:
       name: "{{ item }}"
       state: restarted
     with_items:

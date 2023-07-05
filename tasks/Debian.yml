@@ -172,7 +172,7 @@
     notify: restart-ds
 
   - name: Start example service
-    community.general.supervisorctl:
+    ansible.builtin.systemd:
       name: ds:example
       state: started
     when: start_example | bool
