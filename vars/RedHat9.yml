@@ -1,3 +1,4 @@
 onlyoffice_repo: "https://download.onlyoffice.com/repo/centos/main/noarch/onlyoffice-repo.noarch.rpm"
 nginx_repo: "https://nginx.org/packages/rhel/9/x86_64/RPMS/nginx-1.24.0-1.el9.ngx.x86_64.rpm"
 msttcore_fonts: "https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm"
+epel_release: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm"
