@@ -1,0 +1,63 @@
+---
+  - name: Add onlyoffice repo
+    ansible.builtin.dnf:
+      name: "{{ onlyoffice_repo }}"
+      disable_gpg_check: true
+    become: true
+
+  - name: Configure Epel repository (RedHat)
+    when: ansible_distribution == 'RedHat'
+    become: true
+    block:
+    - name: Enable the CodeReady Builder repository
+      ansible.builtin.dnf:
+        name: codeready-builder-for-rhel-9-rpms
+        state: present
+    - name: Install EPEL repository
+      ansible.builtin.dnf:
+        name: "{{ epel_release }}"
+        state: present
+
+  - name: Configure Epel repository (not RedHat)
+    when: ansible_distribution != 'RedHat'
+    become: true
+    block:
+    - name: Enable the CodeReady Builder repository (not RedHat)
+      ansible.builtin.dnf:
+        name: crb
+        state: present
+    - name: Install EPEL repository
+      ansible.builtin.dnf:
+        name: epel-release
+        state: present
+
+  - name: Install dependency
+    ansible.builtin.dnf:
+      name: "{{ item.name }}"
+      disable_gpg_check: true
+    with_items:
+      - { name: "{{ nginx_repo }}", state: present }
+    become: true
+
+  - name: Set ds port (if configured)
+    ansible.builtin.lineinfile:
+      path: /root/.bashrc
+      line: export DS_PORT={{ ds_port }}
+    when:
+      - ds_port
+    become: true
+
+  - name: Install documentserver from repo
+    ansible.builtin.dnf:
+      name: "{{ package_name }}"
+      update_cache: true
+      state: "{{ package_state }}"
+    become: true
+
+  - name: Install the documentserver by URL
+    ansible.builtin.dnf:
+      name: "{{ package_url }}"
+      state: present
+      validate_certs: true
+      disable_gpg_check: true
+    when: package_url | length > 0
