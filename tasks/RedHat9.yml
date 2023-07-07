@@ -10,8 +10,8 @@
     become: true
     block:
     - name: Enable the CodeReady Builder repository
-      ansible.builtin.dnf:
-        name: codeready-builder-for-rhel-9-rpms
+      community.general.rhsm_repository:
+        name: "{{ crb_for_rhel9 }}"
         state: present
     - name: Install EPEL repository
       ansible.builtin.dnf:
