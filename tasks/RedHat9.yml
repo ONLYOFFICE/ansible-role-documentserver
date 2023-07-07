@@ -16,6 +16,7 @@
     - name: Install EPEL repository
       ansible.builtin.dnf:
         name: "{{ epel_release }}"
+        disable_gpg_check: true
         state: present
 
   - name: Configure Epel repository (not RedHat)
