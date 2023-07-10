@@ -5,19 +5,14 @@
       disable_gpg_check: true
     become: true
 
-  - name: Configure Epel repository (RedHat)
+  - name: Install Epel repository (RedHat)
+    ansible.builtin.dnf:
+      name: "{{ epel_release }}"
+      disable_gpg_check: true
+      state: present
+      enablerepo: "{{ crb_for_rhel9 }}"
     when: ansible_distribution == 'RedHat'
     become: true
-    block:
-    - name: Enable the CodeReady Builder repository
-      community.general.rhsm_repository:
-        name: "{{ crb_for_rhel9 }}"
-        state: present
-    - name: Install Epel repository
-      ansible.builtin.dnf:
-        name: "{{ epel_release }}"
-        disable_gpg_check: true
-        state: present
 
   - name: Install Epel repository (Not RedHat)
     ansible.builtin.dnf:
