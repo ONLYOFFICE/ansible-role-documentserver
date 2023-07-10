@@ -13,24 +13,19 @@
       community.general.rhsm_repository:
         name: "{{ crb_for_rhel9 }}"
         state: present
-    - name: Install EPEL repository
+    - name: Install Epel repository
       ansible.builtin.dnf:
         name: "{{ epel_release }}"
         disable_gpg_check: true
         state: present
 
-  - name: Configure Epel repository (not RedHat)
+  - name: Install Epel repository (Not RedHat)
+    ansible.builtin.dnf:
+      name: epel-release
+      state: present
+      enablerepo: crb
     when: ansible_distribution != 'RedHat'
     become: true
-    block:
-    - name: Enable the CodeReady Builder repository (not RedHat)
-      ansible.builtin.dnf:
-        name: crb
-        state: present
-    - name: Install EPEL repository
-      ansible.builtin.dnf:
-        name: epel-release
-        state: present
 
   - name: Install dependency
     ansible.builtin.dnf:
