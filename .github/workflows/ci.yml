@@ -48,7 +48,8 @@ jobs:
           python-version: '3.x'
 
       - name: Install test dependencies.
-        run: pip3 install ansible molecule[lint,docker] docker yamllint ansible-lint
+        run: pip3 install ansible==8.1.0 molecule[lint,docker]==4.0.4 docker==6.1.3 \
+                          yamllint==1.32.0 ansible-lint==6.16.2 ansible-compat==3.0.2
 
       - name: Downgrade docker
         run: |
