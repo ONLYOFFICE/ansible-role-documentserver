@@ -24,7 +24,7 @@
     when: not is_nonfree_package | bool
 
   - name: Start example service
-    community.general.supervisorctl:
-      name: ds:example
+    ansible.builtin.systemd:
+      name: ds-example
       state: started
     when: start_example | bool

@@ -1,10 +1,10 @@
   - name: Restart-ds
-    community.general.supervisorctl:
+    ansible.builtin.systemd:
       name: "{{ item }}"
       state: restarted
     with_items:
-    - 'ds:converter'
-    - 'ds:docservice'
+    - 'ds-converter'
+    - 'ds-docservice'
     become: yes
 
   - name: Restart-nginx
