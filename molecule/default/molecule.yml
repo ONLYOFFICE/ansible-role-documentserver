@@ -21,15 +21,18 @@ verifier:
   name: ansible
 scenario:
   test_sequence:
-     - lint
-     - destroy
-     - dependency
-     - syntax
-     - create
-     - prepare
-     - converge
-     - verify
-     - destroy
+    - dependency
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - side_effect
+    - verify
+    - cleanup
+    - destroy
 lint: |
   set -e
   yamllint .
