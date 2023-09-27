@@ -1,6 +1,6 @@
 ---
 name: Test
-'on':
+on:
   pull_request:
   schedule:
     - cron: '0 0 1 * *'
@@ -10,7 +10,6 @@ defaults:
     working-directory: 'ansible-role-documentserver'
 
 jobs:
-
   molecule:
     name: Molecule test on
     runs-on: ubuntu-20.04
