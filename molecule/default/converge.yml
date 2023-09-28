@@ -25,7 +25,7 @@
 
 
     rabbitmq_users:
-      - name: "{{ rabbitmq_server_user }}"
+      - user: "{{ rabbitmq_server_user }}"
         password: "{{ rabbitmq_server_pass }}"
         vhost: "{{ rabbitmq_server_vpath }}"
         configure_priv: .*
