@@ -15,5 +15,8 @@
         url: "{{ proto }}://localhost/healthcheck/"
         return_content: true
         validate_certs: false
+        timeout: 10
       register: healthcheck
-      failed_when: "'true' not in healthcheck.content"
+      until: "'true' in healthcheck.content"
+      retries: 10
+      delay: 5
