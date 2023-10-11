@@ -17,11 +17,8 @@
             - apt-transport-https
             - nginx
           state: present
-        changed_when: false
-        failed_when: false
 
       - name: Restart-nginx
         ansible.builtin.service:
           name: "nginx"
           state: restarted
-        become: true
