@@ -1,9 +1,10 @@
 ---
-- hosts: all
+- name: Verify the service is up and running
+  hosts: all
   remote_user: root
-  become: true
   vars:
     proto: "{{ lookup('env', 'PROTO') }}"
+
   tasks:
     - name: Wait 30 seconds
       ansible.builtin.pause:
