@@ -6,9 +6,9 @@
     proto: "{{ lookup('env', 'PROTO') }}"
   tasks:
     - name: "Get health check status on {{ proto }}://localhost/healthcheck/"
-      uri:
+      ansible.builtin.uri:
         url: "{{ proto }}://localhost/healthcheck/"
-        return_content: yes
-        validate_certs: no
+        return_content: true
+        validate_certs: false
       register: healthcheck
       failed_when: "'true' not in healthcheck.content"

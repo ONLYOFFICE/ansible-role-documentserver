@@ -22,8 +22,6 @@
       - name: "{{ db_server_user }}"
         password: "{{ db_server_pass }}"
 
-
-
     rabbitmq_users:
       - user: "{{ rabbitmq_server_user }}"
         password: "{{ rabbitmq_server_pass }}"
