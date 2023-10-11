@@ -5,6 +5,10 @@
   vars:
     proto: "{{ lookup('env', 'PROTO') }}"
   tasks:
+    - name: Wait 30 seconds
+      ansible.builtin.pause:
+        seconds: 30
+
     - name: "Get health check status on {{ proto }}://localhost/healthcheck/"
       ansible.builtin.uri:
         url: "{{ proto }}://localhost/healthcheck/"
