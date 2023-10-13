@@ -15,10 +15,4 @@
             - gnupg
             - apt-utils
             - apt-transport-https
-            - nginx
           state: present
-
-      - name: Restart-nginx
-        ansible.builtin.service:
-          name: "nginx"
-          state: restarted
