@@ -5,10 +5,8 @@
     with_items:
     - 'ds-converter'
     - 'ds-docservice'
-    become: yes
 
   - name: Restart-nginx
     ansible.builtin.service:
       name: "nginx"
       state: restarted
-    become: yes
