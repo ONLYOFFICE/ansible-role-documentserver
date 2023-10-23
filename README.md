@@ -116,7 +116,7 @@ The values in the `local.json` file can be redefined. To do this, you need to ov
 ## Example Playbook
 
     - hosts: all
-
+      become: true
       vars:
         postgresql_global_config_options:
           - option: listen_addresses
