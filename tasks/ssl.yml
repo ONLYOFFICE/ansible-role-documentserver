@@ -6,7 +6,6 @@
             owner: root
             group: root
             mode: "0644"
-    become: yes
 
 
   - name: Copy key to server
@@ -16,7 +15,6 @@
             owner: root
             group: root
             mode: "0400"
-    become: yes
 
   - name: Copy certificate to server
     ansible.builtin.copy:
@@ -25,11 +23,9 @@
             owner: root
             group: root
             mode: "0644"
-    become: yes
 
   - name: Copy ds.conf template
     ansible.builtin.command: cp -f /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl "{{ nginx_config_path }}"
-    become: yes
     register: myoutput
     changed_when: myoutput.rc != 0
 
@@ -38,7 +34,6 @@
             path: "{{ nginx_config_path }}" 
             regexp: "SSL_CERTIFICATE_PATH"
             line: "  ssl_certificate {{ certs_directory + 'tls.crt' }};"
-    become: yes
 
   - name: Edit ssl key path
     ansible.builtin.lineinfile:
@@ -46,7 +41,4 @@
             regexp: "SSL_KEY_PATH"
             line: "  ssl_certificate_key {{ certs_directory + 'tls.key' }};"
     notify: 
-        Restart-nginx
-    become: yes
-
- 
+        Restart-nginx 
