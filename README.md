@@ -159,7 +159,7 @@ The values in the `local.json` file can be redefined. To do this, you need to ov
             password: "{{ db_server_pass }}"
 
         rabbitmq_users:
-          - name: "{{ rabbitmq_server_user }}"
+          - user: "{{ rabbitmq_server_user }}"
             password: "{{ rabbitmq_server_pass }}"
             vhost: "{{ rabbitmq_server_vpath }}"
             configure_priv: .*
