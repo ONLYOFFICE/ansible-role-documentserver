@@ -1,12 +1,13 @@
-  - name: Restart-ds
-    ansible.builtin.systemd:
-      name: "{{ item }}"
-      state: restarted
-    with_items:
-    - 'ds-converter'
-    - 'ds-docservice'
+---
+- name: Restart-ds
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - "ds-converter"
+    - "ds-docservice"
 
-  - name: Restart-nginx
-    ansible.builtin.service:
-      name: "nginx"
-      state: restarted
+- name: Restart-nginx
+  ansible.builtin.service:
+    name: "nginx"
+    state: restarted
