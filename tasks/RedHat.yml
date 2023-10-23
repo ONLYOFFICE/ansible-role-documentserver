@@ -1,0 +1,33 @@
+---
+  - name: Add onlyoffice repo
+    ansible.builtin.yum:
+      name: "{{ onlyoffice_repo }}"
+      disable_gpg_check: true
+
+  - name: Install dependency
+    ansible.builtin.yum:
+      name: "{{ item.name }}"
+      disable_gpg_check: true
+    with_items:
+      - { name: "{{ nginx_repo }}", state: present }
+
+  - name: Set ds port (if configured)
+    ansible.builtin.lineinfile:
+      path: /root/.bashrc
+      line: export DS_PORT={{ ds_port }}
+    when:
+      - ds_port
+
+  - name: Install documentserver from repo
+    ansible.builtin.yum:
+      name: "{{ package_name }}"
+      update_cache: true
+      state: "{{ package_state }}"
+
+  - name: Install the documentserver by URL
+    ansible.builtin.yum:
+      name: "{{ package_url }}"
+      state: present
+      validate_certs: true
+      disable_gpg_check: true
+    when: package_url | length > 0
