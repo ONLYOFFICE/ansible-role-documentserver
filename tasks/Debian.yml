@@ -12,7 +12,6 @@
       keyserver: "keyserver.ubuntu.com"
       id: "8320CA65CB2DE8E5"
       state: present
-    become: yes
     when: not gpg_port_status.failed
     
   - name: Add onlyoffice gpg keys on port 80
@@ -20,21 +19,18 @@
       keyserver: "hkp://keyserver.ubuntu.com:80"
       id: "8320CA65CB2DE8E5"
       state: present
-    become: yes
     when: gpg_port_status.failed
 
   - name: Add onlyoffice repositories
     ansible.builtin.apt_repository:
       repo: "{{ package_repo }}"
       state: present
-    become: yes
 
   - name: Add debian contrib repositories
     ansible.builtin.apt_repository:
       repo: "{{ debian_repo }}"
       state: present
     when: ansible_distribution == "Debian"
-    become: yes
 
   - name: Say 'yes' to ttf-mscorefonts-installer
     ansible.builtin.debconf:
@@ -42,7 +38,6 @@
       question: msttcorefonts/accepted-mscorefonts-eula
       value: true
       vtype: boolean
-    become: yes
     
   - name: Accept license
     ansible.builtin.debconf:
@@ -50,7 +45,6 @@
       question: onlyoffice/accepted-onlyoffice-license
       value: 'true'
       vtype: boolean
-    become: yes
 
   - name: Set up ds port (if configured)
     ansible.builtin.debconf:
@@ -60,7 +54,6 @@
       vtype: string
     when:
       - ds_port
-    become: yes
 
   - name: Set up db host name
     ansible.builtin.debconf:
@@ -69,7 +62,6 @@
       value: "{{ db_server_host }}"
       vtype: string
     when: db_server_host | length > 0
-    become: yes
 
   - name: Set up db name
     ansible.builtin.debconf:
@@ -78,7 +70,6 @@
       value: "{{ db_server_name }}"
       vtype: string
     when: db_server_name | length > 0
-    become: yes
 
   - name: Set up db user
     ansible.builtin.debconf:
@@ -87,7 +78,6 @@
       value: "{{ db_server_user }}"
       vtype: string
     when: db_server_user | length > 0
-    become: yes
 
   - name: Set up db user password
     ansible.builtin.debconf:
@@ -98,10 +88,8 @@
     when:
       - db_server_pass | length > 0
       - not ansible_check_mode
-    become: yes
 
   - name: Set up JWT status
-    become: yes
     ansible.builtin.debconf:
       name: "{{ package_name }}"
       question: onlyoffice/jwt-enabled
@@ -116,7 +104,6 @@
       vtype: string
     when:
       - jwt_secret
-    become: yes
 
   - name: Set up JWT Header
     ansible.builtin.debconf:
@@ -126,14 +113,12 @@
       vtype: string
     when:
       - jwt_header
-    become: yes
 
   - name: Install documentserver
     ansible.builtin.apt: 
       name: "{{ package_name }}"
       update_cache: yes
       state: "{{ package_state }}"
-    become: yes
 
   - name: Set up redis host name
     ansible.builtin.shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis.host  = \"{{ redis_server_host }}\"'"
@@ -157,7 +142,6 @@
       question: onlyoffice/cluster-mode
       value: 'true'
       vtype: boolean
-    become: yes
     when: cluster_mode | bool
 
   - name: Set up rabbitmq url
