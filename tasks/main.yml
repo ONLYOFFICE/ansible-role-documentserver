@@ -1,7 +1,7 @@
-- name: Include {{ ansible_os_family }} variables
+- name: Include variables {{ ansible_os_family }}
   ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
 
-- name: Include {{ ansible_os_family }} tasks
+- name: Include tasks {{ ansible_os_family }}
   ansible.builtin.include_tasks: "{{ ansible_os_family }}.yml"
 
 - name: Include RedHat postinstall tasks
