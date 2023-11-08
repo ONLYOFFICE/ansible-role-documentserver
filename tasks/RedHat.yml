@@ -4,6 +4,24 @@
     name: "{{ onlyoffice_repo }}"
     disable_gpg_check: true
 
+- name: Inastall epel repository
+  ansible.builtin.yum:
+    name: epel-release
+    state: present
+  when: ansible_distribution != 'RedHat'
+
+- name: Install epel gpg key
+  ansible.builtin.rpm_key:
+    key: "{{ epel_gpg_key }}"
+    state: present
+  when: ansible_distribution == 'RedHat'
+
+- name: Install epel repository
+  ansible.builtin.yum:
+    name: "{{ epel_release }}"
+    state: present
+  when: ansible_distribution == 'RedHat'
+
 - name: Install dependency
   ansible.builtin.yum:
     name: "{{ item.name }}"
