@@ -1,8 +1,13 @@
 ---
+- name: Add onlyoffice gpg key
+  ansible.builtin.rpm_key:
+    key: "{{ onlyoffice_gpg_key }}"
+    state: present
+
 - name: Add onlyoffice repo
   ansible.builtin.yum:
     name: "{{ onlyoffice_repo }}"
-    disable_gpg_check: true
+    state: present
 
 - name: Inastall epel repository
   ansible.builtin.yum:
