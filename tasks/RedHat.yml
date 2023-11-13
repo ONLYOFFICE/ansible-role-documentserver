@@ -1,38 +1,20 @@
 ---
-- name: Add onlyoffice gpg key
+- name: Add required gpg keys
   ansible.builtin.rpm_key:
-    key: "{{ onlyoffice_gpg_key }}"
+    key: "{{ item }}"
     state: present
+  with_items:
+    - "{{ epel_gpg_key }}"
+    - "{{ onlyoffice_gpg_key }}"
 
-- name: Add onlyoffice repo
-  ansible.builtin.yum:
-    name: "{{ onlyoffice_repo }}"
-    state: present
-
-- name: Inastall epel repository
-  ansible.builtin.yum:
-    name: epel-release
-    state: present
-  when: ansible_distribution != 'RedHat'
-
-- name: Install epel gpg key
-  ansible.builtin.rpm_key:
-    key: "{{ epel_gpg_key }}"
-    state: present
-  when: ansible_distribution == 'RedHat'
-
-- name: Install epel repository
-  ansible.builtin.yum:
-    name: "{{ epel_release }}"
-    state: present
-  when: ansible_distribution == 'RedHat'
-
-- name: Install dependency
+- name: Install required items
   ansible.builtin.yum:
     name: "{{ item.name }}"
-    disable_gpg_check: true
+    state: present
   with_items:
-    - { name: "{{ nginx_repo }}", state: present }
+    - { name: "{{ epel_release if ansible_distribution == 'RedHat' else 'epel-release' }}"}
+    - { name: "{{ onlyoffice_repo }}" }
+    - { name: "{{ nginx_package }}" }
 
 - name: Set ds port (if configured)
   ansible.builtin.lineinfile:
