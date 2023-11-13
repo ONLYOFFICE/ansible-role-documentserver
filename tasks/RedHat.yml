@@ -23,7 +23,6 @@
     - { name: "{{ epel_release if ansible_distribution == 'RedHat' else 'epel-release' }}"}
     - { name: "{{ onlyoffice_repo }}" }
     - { name: "{{ nginx_package }}" }
-    - { name: "{{ msttcore_fonts }}"}
 
 - name: Set ds port (if configured)
   ansible.builtin.lineinfile:
