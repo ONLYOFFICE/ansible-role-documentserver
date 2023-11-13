@@ -6,6 +6,7 @@
   with_items:
     - "{{ epel_gpg_key }}"
     - "{{ onlyoffice_gpg_key }}"
+    - "{{ nginx_gpg_key }}"
 
 - name: Install required items
   ansible.builtin.yum:
