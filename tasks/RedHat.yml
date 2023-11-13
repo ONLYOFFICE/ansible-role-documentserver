@@ -36,7 +36,7 @@
     name: "{{ package_name }}"
     update_cache: true
     state: "{{ package_state }}"
-  when: package_url is not defined
+  when: package_url | length == 0
 
 - name: Install the documentserver by URL
   ansible.builtin.yum:
