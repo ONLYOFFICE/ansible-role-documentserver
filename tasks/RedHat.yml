@@ -8,6 +8,13 @@
     - "{{ onlyoffice_gpg_key }}"
     - "{{ nginx_gpg_key }}"
 
+- name: Install xorg-x11-server-Xvfb
+  ansible.builtin.yum:
+    name: xorg-x11-server-Xvfb
+    enablerepo: "rhel-7-server-rhui-optional-rpms"
+    state: present
+  when: ansible_distribution == 'RedHat' and ansible_distribution_major_version == '7'
+
 - name: Install required items
   ansible.builtin.yum:
     name: "{{ item.name }}"
