@@ -1,0 +1,42 @@
+---
+  - name: Add onlyoffice repo
+    ansible.builtin.dnf:
+      name: "{{ onlyoffice_repo }}"
+      disable_gpg_check: yes
+    become: yes
+
+  - name: Install epel repo
+    ansible.builtin.dnf: 
+      name: epel-release
+    become: yes
+
+  - name: Install dependency
+    ansible.builtin.dnf:
+      name: "{{ item.name }}"
+      disable_gpg_check: yes
+    with_items:
+      - { name: "{{ nginx_repo }}", state: present }
+    become: yes
+
+  - name: Set ds port (if configured)
+    ansible.builtin.lineinfile:
+      path: /root/.bashrc
+      line: export DS_PORT={{ ds_port }}
+    when:
+      - ds_port
+    become: yes
+
+  - name: Install documentserver from repo
+    ansible.builtin.dnf:
+      name: "{{ package_name }}"
+      update_cache: yes
+      state: "{{ package_state }}"
+    become: yes
+
+  - name: Install the documentserver by URL
+    ansible.builtin.dnf:
+      name: "{{ package_url }}"
+      state: present
+      validate_certs: yes
+      disable_gpg_check: yes
+    when: package_url | length > 0

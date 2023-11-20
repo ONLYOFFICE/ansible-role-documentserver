@@ -1,0 +1,41 @@
+---
+  - name: Add onlyoffice repo
+    ansible.builtin.yum:
+      name: "{{ onlyoffice_repo }}"
+    become: yes
+
+  - name: Install epel repo
+    ansible.builtin.yum: 
+      name: epel-release
+    become: yes
+
+  - name: Install dependency
+    ansible.builtin.yum:
+      name: "{{ item.name }}"
+    with_items:
+      - { name: "{{ msttcore_fonts }}", state: present }
+      - { name: "{{ nginx_repo }}", state: present }
+    become: yes
+
+  - name: Set ds port (if configured)
+    ansible.builtin.lineinfile:
+      path: /root/.bashrc
+      line: export DS_PORT={{ ds_port }}
+    when:
+      - ds_port
+    become: yes
+
+  - name: Install documentserver from repo
+    ansible.builtin.yum:
+      name: "{{ package_name }}"
+      update_cache: yes
+      state: "{{ package_state }}"
+    become: yes
+    when: package_url | length == 0
+
+  - name: Install the documentserver by URL
+    ansible.builtin.yum:
+      name: "{{ package_url }}"
+      state: present
+      validate_certs: yes
+    when: package_url | length > 0
