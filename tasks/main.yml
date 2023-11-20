@@ -4,10 +4,6 @@
 - name: Include tasks {{ ansible_os_family }}
   ansible.builtin.include_tasks: "{{ ansible_os_family }}.yml"
 
-- name: Include RedHat postinstall tasks
-  ansible.builtin.include_tasks: "{{ ansible_os_family }}_post.yml"
-  when: ansible_os_family == "RedHat"
-
 - name: Include SSL if needed
   ansible.builtin.include_tasks: ssl.yml
   when: proto == "https"
