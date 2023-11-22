@@ -1,14 +1,22 @@
 ---
-- hosts: all
+- name: Verify the service is up and running
+  hosts: all
   remote_user: root
-  become: true
   vars:
     proto: "{{ lookup('env', 'PROTO') }}"
+
   tasks:
+    - name: Wait 30 seconds
+      ansible.builtin.pause:
+        seconds: 30
+
     - name: "Get health check status on {{ proto }}://localhost/healthcheck/"
-      uri:
+      ansible.builtin.uri:
         url: "{{ proto }}://localhost/healthcheck/"
-        return_content: yes
-        validate_certs: no
+        return_content: true
+        validate_certs: false
+        timeout: 10
       register: healthcheck
-      failed_when: "'true' not in healthcheck.content"
+      until: "'true' in healthcheck.content"
+      retries: 10
+      delay: 5

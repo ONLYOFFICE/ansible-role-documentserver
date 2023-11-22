@@ -22,10 +22,8 @@
       - name: "{{ db_server_user }}"
         password: "{{ db_server_pass }}"
 
-
-
     rabbitmq_users:
-      - name: "{{ rabbitmq_server_user }}"
+      - user: "{{ rabbitmq_server_user }}"
         password: "{{ rabbitmq_server_pass }}"
         vhost: "{{ rabbitmq_server_vpath }}"
         configure_priv: .*
@@ -41,6 +39,17 @@
     key_file: "test.key"
     cert_file: "test.crt"
     package_url: "{{ lookup('env', 'PACKAGE') }}"
+
+  # workaround to pass molecule tests on RockyLinux
+  pre_tasks:
+    - name: Install en_US.UTF-8 locale
+      ansible.builtin.yum:
+        name: langpacks-en
+        state: present
+      when: ansible_distribution == 'Rocky'
+    - name: Set locale to en_US.UTF-8
+      ansible.builtin.command: localectl set-locale LANG=en_US.UTF-8
+      when: ansible_distribution == 'Rocky'
 
   roles:
     - geerlingguy.postgresql

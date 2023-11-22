@@ -1,15 +1,15 @@
 ---
 name: Test
-'on':
+on:
   pull_request:
-  push:
+  schedule:
+    - cron: '0 0 1 * *'
 
 defaults:
   run:
     working-directory: 'ansible-role-documentserver'
 
 jobs:
-
   molecule:
     name: Molecule test on
     runs-on: ubuntu-20.04
@@ -19,12 +19,13 @@ jobs:
         distro:
           - centos7
           - centos8
-          - debian9
+          - rockylinux9
           - debian10
           - debian11
-          - ubuntu1604
+          - debian12
           - ubuntu1804
           - ubuntu2004
+          - ubuntu2204
         proto:
           - http
           - https
@@ -49,25 +50,6 @@ jobs:
 
       - name: Install test dependencies.
         run: pip3 install ansible ansible-lint molecule molecule-plugins[docker] docker
-
-      - name: Downgrade docker
-        run: |
-             sudo apt-get remove docker docker-engine docker.io containerd runc
-             sudo apt-get update
-             sudo apt-get install \
-                ca-certificates \
-                curl \
-                gnupg \
-                lsb-release
-             sudo mkdir -p /etc/apt/keyrings
-             curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-             echo \
-                  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-                  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-             sudo apt-get update
-             apt-cache madison docker-ce | awk '{ print $3 }'
-             export VERSION_STRING=5:19.03.9~3-0~ubuntu-focal
-             sudo apt-get install docker-ce=$VERSION_STRING docker-ce-cli=$VERSION_STRING containerd.io docker-compose-plugin
 
       - name: Create test ssl certificate and key
         run: |
