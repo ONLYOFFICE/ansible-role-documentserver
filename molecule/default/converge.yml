@@ -1,6 +1,7 @@
 ---
 - name: Converge
   hosts: all
+  become: true
   vars:
     postgresql_global_config_options:
       - option: listen_addresses
