@@ -17,6 +17,10 @@ Installation requires PostgreSQL, RabbitMQ and Redis server in the system or net
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
+    ds_port: ""
+
+The port where documentserver is running, if you do not set this variable, documentserver is will be runned by default on port `80`.
+
     db_server_host: localhost
 
 The IP address or the name of the host where the PostgreSQL server is running.
@@ -36,6 +40,10 @@ The password set for the PostgreSQL account.
     package_name: onlyoffice-documentserver
 
 The package name of the ONLYOFFICE Document Server.
+
+    package_state: latest | present
+
+The package state of the ONLYOFFICE Document Server. If set to latest (default), a upgrade will be performed!
 
     redis_server_host: localhost
 
@@ -65,17 +73,17 @@ The virtual path for the RabbitMQ server.
 
 The option to add ssl configuration or not.
 
-    jwt_enabled: false
+    jwt_enabled: true
 
-The option to add jwt configuration or not.
+The option for enable or disable JWT token. Enabled by default
 
-    jwt_secret: secret
+    jwt_secret: ""
 
-The secret set for jwt option.
+The custom secret set for jwt option. Random value by default
 
-    jwt_header: Authorization
+    jwt_header: ""
 
-The header set for jwt option.
+The custom header set for jwt option.
 
     key_file: "~/certs/tls.key"
 
@@ -101,51 +109,57 @@ The option for being able to install the package by URL.
 
     None.
 
+## Overwriting config values 
+
+The values in the `local.json` file can be redefined. To do this, you need to override the necessary values in the `vars/main.yml` file in the `onlyoffice_local_json: {}` field.
+
 ## Example Playbook
 
     - hosts: all
-
-    vars:
+      become: true
+      vars:
         postgresql_global_config_options:
-        - option: listen_addresses
+          - option: listen_addresses
             value: "*"
-        - option: unix_socket_directories
+          - option: unix_socket_directories
             value: '{{ postgresql_unix_socket_directories | join(",") }}'
+          - option: log_directory
+            value: 'log'
 
         postgresql_hba_entries:
-        - type: local
+          - type: local
             database: all
             user: postgres
             auth_method: peer
-        - type: local
+          - type: local
             database: all
             user: all
             auth_method: peer 
-        - type: host
+          - type: host
             database: all
             user: all
             address: 127.0.0.1/32
             auth_method: md5
-        - type: host
+          - type: host
             database: all
             user: all
             address: ::1/128
             auth_method: md5
-        - type: host
+          - type: host
             database: all
             user: all
             address: 0.0.0.0/0
             auth_method: md5
 
         postgresql_databases:
-        - name: "{{ db_server_name }}"
+          - name: "{{ db_server_name }}"
 
         postgresql_users:
-        - name: "{{ db_server_user }}"
+          - name: "{{ db_server_user }}"
             password: "{{ db_server_pass }}"
 
         rabbitmq_users:
-        - name: "{{ rabbitmq_server_user }}"
+          - user: "{{ rabbitmq_server_user }}"
             password: "{{ rabbitmq_server_pass }}"
             vhost: "{{ rabbitmq_server_vpath }}"
             configure_priv: .*
@@ -157,7 +171,7 @@ The option for being able to install the package by URL.
 
         redis_bind_interface: 0.0.0.0
 
-    roles:
+      roles:
         - geerlingguy.postgresql
         - ONLYOFFICE.rabbitmq
         - geerlingguy.redis

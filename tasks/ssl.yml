@@ -1,52 +1,42 @@
 ---
-  - name: Create certs directory
-    ansible.builtin.file:
-            path: "{{ certs_directory }}"
-            state: directory
-            owner: root
-            group: root
-            mode: "0644"
-    become: yes
+- name: Create certs directory
+  ansible.builtin.file:
+    path: "{{ certs_directory }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0644"
 
+- name: Copy key to server
+  ansible.builtin.copy:
+    src: "{{ key_file }}"
+    dest: "{{ certs_directory + 'tls.key' }}"
+    owner: root
+    group: root
+    mode: "0400"
 
-  - name: Copy key to server
-    ansible.builtin.copy:
-            src: "{{ key_file }}"
-            dest: "{{ certs_directory + 'tls.key' }}"
-            owner: root
-            group: root
-            mode: "0400"
-    become: yes
+- name: Copy certificate to server
+  ansible.builtin.copy:
+    src: "{{ cert_file }}"
+    dest: "{{ certs_directory + 'tls.crt' }}"
+    owner: root
+    group: root
+    mode: "0644"
 
-  - name: Copy certificate to server
-    ansible.builtin.copy:
-            src: "{{ cert_file }}"
-            dest: "{{ certs_directory + 'tls.crt' }}"
-            owner: root
-            group: root
-            mode: "0644"
-    become: yes
+- name: Copy ds.conf template
+  ansible.builtin.command: cp -f /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl "{{ nginx_config_path }}"
+  register: myoutput
+  changed_when: myoutput.rc != 0
 
-  - name: Copy ds.conf template
-    ansible.builtin.command: cp -f /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl "{{ nginx_config_path }}"
-    become: yes
-    register: myoutput
-    changed_when: myoutput.rc != 0
+- name: Edit ssl cert path
+  ansible.builtin.lineinfile:
+    path: "{{ nginx_config_path }}"
+    regexp: "SSL_CERTIFICATE_PATH"
+    line: "  ssl_certificate {{ certs_directory + 'tls.crt' }};"
 
-  - name: Edit ssl cert path
-    ansible.builtin.lineinfile:
-            path: "{{ nginx_config_path }}" 
-            regexp: "SSL_CERTIFICATE_PATH"
-            line: "  ssl_certificate {{ certs_directory + 'tls.crt' }};"
-    become: yes
-
-  - name: Edit ssl key path
-    ansible.builtin.lineinfile:
-            path: "{{ nginx_config_path }}" 
-            regexp: "SSL_KEY_PATH"
-            line: "  ssl_certificate_key {{ certs_directory + 'tls.key' }};"
-    notify: 
-        Restart-nginx
-    become: yes
-
- 
+- name: Edit ssl key path
+  ansible.builtin.lineinfile:
+    path: "{{ nginx_config_path }}"
+    regexp: "SSL_KEY_PATH"
+    line: "  ssl_certificate_key {{ certs_directory + 'tls.key' }};"
+  notify: Restart-nginx

@@ -1,172 +1,160 @@
 ---
-  - name: "Check if gpg key port is ok (port 11371)"
-    ansible.builtin.wait_for:
-      host: keyserver.ubuntu.com
-      port: 11371
-      timeout: 5
-    register: gpg_port_status
-    ignore_errors: true 
-     
-  - name: Add onlyoffice gpg keys
-    ansible.builtin.apt_key:
-      keyserver: "keyserver.ubuntu.com"
-      id: "8320CA65CB2DE8E5"
-      state: present
-    become: yes
-    when: not gpg_port_status.failed
-    
-  - name: Add onlyoffice gpg keys on port 80
-    ansible.builtin.apt_key:
-      keyserver: "hkp://keyserver.ubuntu.com:80"
-      id: "8320CA65CB2DE8E5"
-      state: present
-    become: yes
-    when: gpg_port_status.failed
+- name: "Check if gpg key port is ok (port 11371)"
+  ansible.builtin.wait_for:
+    host: keyserver.ubuntu.com
+    port: 11371
+    timeout: 5
+  register: gpg_port_status
+  ignore_errors: true
 
-  - name: Add onlyoffice repositories
-    ansible.builtin.apt_repository:
-      repo: "{{ package_repo }}"
-      state: present
-    become: yes
+- name: Add onlyoffice gpg keys
+  ansible.builtin.apt_key:
+    keyserver: "keyserver.ubuntu.com"
+    id: "8320CA65CB2DE8E5"
+    state: present
+  when: not gpg_port_status.failed
 
-  - name: Add debian contrib repositories
-    ansible.builtin.apt_repository:
-      repo: "{{ debian_repo }}"
-      state: present
-    when: ansible_distribution == "Debian"
-    become: yes
+- name: Add onlyoffice gpg keys on port 80
+  ansible.builtin.apt_key:
+    keyserver: "hkp://keyserver.ubuntu.com:80"
+    id: "8320CA65CB2DE8E5"
+    state: present
+  when: gpg_port_status.failed
 
-  - name: Say 'yes' to ttf-mscorefonts-installer
-    ansible.builtin.debconf:
-      name: ttf-mscorefonts-installer
-      question: msttcorefonts/accepted-mscorefonts-eula
-      value: true
-      vtype: boolean
-    become: yes
-    
-  - name: Accept license
-    ansible.builtin.debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/accepted-onlyoffice-license
-      value: 'true'
-      vtype: boolean
-    become: yes
-    
-  - name: Set up db host name
-    ansible.builtin.debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/db-host
-      value: "{{ db_server_host }}"
-      vtype: string
-    when: db_server_host | length > 0
-    become: yes
+- name: Add onlyoffice repositories
+  ansible.builtin.apt_repository:
+    repo: "{{ package_repo }}"
+    state: present
 
-  - name: Set up db name
-    ansible.builtin.debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/db-name
-      value: "{{ db_server_name }}"
-      vtype: string
-    when: db_server_name | length > 0
-    become: yes
+- name: Add debian contrib repositories
+  ansible.builtin.apt_repository:
+    repo: "{{ debian_repo }}"
+    state: present
+  when: ansible_distribution == "Debian"
 
-  - name: Set up db user
-    ansible.builtin.debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/db-user
-      value: "{{ db_server_user }}"
-      vtype: string
-    when: db_server_user | length > 0
-    become: yes
+- name: Say 'yes' to ttf-mscorefonts-installer
+  ansible.builtin.debconf:
+    name: ttf-mscorefonts-installer
+    question: msttcorefonts/accepted-mscorefonts-eula
+    value: true
+    vtype: boolean
 
-  - name: Set up db user password
-    ansible.builtin.debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/db-pwd
-      value: "{{ db_server_pass }}"
-      vtype: password
-    when:
-      - db_server_pass | length > 0
-      - not ansible_check_mode
-    become: yes
+- name: Accept license
+  ansible.builtin.debconf:
+    name: "{{ package_name }}"
+    question: onlyoffice/accepted-onlyoffice-license
+    value: "true"
+    vtype: boolean
 
-  - name: Install documentserver
-    ansible.builtin.apt: 
-      name: "{{ package_name }}"
-      update_cache: yes
-      state: latest
-    become: yes
+- name: Set up ds port (if configured)
+  ansible.builtin.debconf:
+    name: "{{ package_name }}"
+    question: onlyoffice/ds-port
+    value: "{{ ds_port }}"
+    vtype: string
+  when:
+    - ds_port
 
-  - name: Set up redis host name
-    ansible.builtin.shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis.host  = \"{{ redis_server_host }}\"'"
-    when:
-      - redis_server_host|length > 0
-      - is_nonfree_package | bool
-    notify: restart-ds
+- name: Set up db host name
+  ansible.builtin.debconf:
+    name: "{{ package_name }}"
+    question: onlyoffice/db-host
+    value: "{{ db_server_host }}"
+    vtype: string
+  when: db_server_host | length > 0
 
+- name: Set up db name
+  ansible.builtin.debconf:
+    name: "{{ package_name }}"
+    question: onlyoffice/db-name
+    value: "{{ db_server_name }}"
+    vtype: string
+  when: db_server_name | length > 0
 
-  - name: Set up redis port number
-    ansible.builtin.shell: "{{ json }} -I -e 'this.services.CoAuthoring.redis.port  = \"{{ redis_server_port }}\"'"
-    when:
-      - redis_server_port
-      - is_nonfree_package | bool
-    notify: restart-ds
+- name: Set up db user
+  ansible.builtin.debconf:
+    name: "{{ package_name }}"
+    question: onlyoffice/db-user
+    value: "{{ db_server_user }}"
+    vtype: string
+  when: db_server_user | length > 0
 
+- name: Set up db user password
+  ansible.builtin.debconf:
+    name: "{{ package_name }}"
+    question: onlyoffice/db-pwd
+    value: "{{ db_server_pass }}"
+    vtype: password
+  when:
+    - db_server_pass | length > 0
+    - not ansible_check_mode
 
-  - name: Set up cluster mode
-    ansible.builtin.debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/cluster-mode
-      value: 'true'
-      vtype: boolean
-    become: yes
-    when: cluster_mode | bool
+- name: Set up JWT status
+  ansible.builtin.debconf:
+    name: "{{ package_name }}"
+    question: onlyoffice/jwt-enabled
+    value: "{{ jwt_enabled }}"
+    vtype: boolean
 
-  - name: Set up rabbitmq url
-    ansible.builtin.shell: "{{ json }} -I -e 'this.rabbitmq.url = \"{{ rabbitmq_server_url }}\"'"
-    when: rabbitmq_server_url | length > 0
-    notify: Restart-ds
+- name: Set up JWT Secret
+  ansible.builtin.debconf:
+    name: "{{ package_name }}"
+    question: onlyoffice/jwt-secret
+    value: "{{ jwt_secret }}"
+    vtype: string
+  when:
+    - jwt_secret
 
-  - name: Create db if it not exist
-    ansible.builtin.shell: "{{ psql }} -f {{ createdb_sql }}"
-    register: result
-    changed_when: result.rc != 0
-    notify: restart-ds
+- name: Set up JWT Header
+  ansible.builtin.debconf:
+    name: "{{ package_name }}"
+    question: onlyoffice/jwt-header
+    value: "{{ jwt_header }}"
+    vtype: string
+  when:
+    - jwt_header
 
-  - name: Set up JWT if needed
-    become: yes
-    ansible.builtin.debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/jwt-enabled
-      value: "{{ jwt_enabled }}"
-      vtype: boolean
-    when: jwt_enabled | bool
-    notify: restart-ds
-    
-  - name: Set up JWT Secret
-    ansible.builtin.debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/jwt-secret
-      value: "{{ jwt_secret }}"
-      vtype: string
-    when: 
-      - jwt_secret | length > 0
-      - jwt_enabled | bool
-    become: yes
+- name: Install documentserver
+  ansible.builtin.apt:
+    name: "{{ package_name }}"
+    update_cache: yes
+    state: "{{ package_state }}"
 
-  - name: Set up JWT Header
-    ansible.builtin.debconf:
-      name: "{{ package_name }}"
-      question: onlyoffice/jwt-header
-      value: "{{ jwt_header }}"
-      vtype: string
-    when: 
-      - jwt_header | length > 0
-      - jwt_enabled | bool
-    become: yes
+- name: Set up redis host name
+  ansible.builtin.shell: '{{ json }} -I -e ''this.services.CoAuthoring.redis.host  = "{{ redis_server_host }}"'''
+  when:
+    - redis_server_host|length > 0
+    - is_nonfree_package | bool
+  notify: restart-ds
 
-  - name: Start example service
-    community.general.supervisorctl:
-      name: ds:example
-      state: started
-    when: start_example | bool
+- name: Set up redis port number
+  ansible.builtin.shell: '{{ json }} -I -e ''this.services.CoAuthoring.redis.port  = "{{ redis_server_port }}"'''
+  when:
+    - redis_server_port
+    - is_nonfree_package | bool
+  notify: restart-ds
+
+- name: Set up cluster mode
+  ansible.builtin.debconf:
+    name: "{{ package_name }}"
+    question: onlyoffice/cluster-mode
+    value: "true"
+    vtype: boolean
+  when: cluster_mode | bool
+
+- name: Set up rabbitmq url
+  ansible.builtin.shell: '{{ json }} -I -e ''this.rabbitmq.url = "{{ rabbitmq_server_url }}"'''
+  when: rabbitmq_server_url | length > 0
+  notify: Restart-ds
+
+- name: Create db if it not exist
+  ansible.builtin.shell: "{{ psql }} -f {{ createdb_sql }}"
+  register: result
+  changed_when: result.rc != 0
+  notify: restart-ds
+
+- name: Start example service
+  ansible.builtin.systemd:
+    name: ds-example
+    state: started
+  when: start_example | bool

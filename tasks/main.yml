@@ -1,26 +1,21 @@
-- name: Include Debian variables
+- name: Include variables {{ ansible_os_family }}
   ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
-  when: ansible_os_family == "Debian"
 
-- name: Include Centos variables
-  ansible.builtin.include_vars: "{{ ansible_os_family }}{{ ansible_distribution_major_version }}.yml"
-  when: ansible_os_family == "RedHat"
-
-- name: Include Debian tasks
+- name: Include tasks {{ ansible_os_family }}
   ansible.builtin.include_tasks: "{{ ansible_os_family }}.yml"
-  when: ansible_os_family == "Debian"
-
-- name: Include Centos install tasks
-  ansible.builtin.include_tasks: "{{ ansible_os_family }}{{ ansible_distribution_major_version }}.yml"
-  when: ansible_os_family == "RedHat"
-
-- name: Include Centos postinstall tasks
-  ansible.builtin.include_tasks: "{{ ansible_os_family }}_post.yml"
-  when: ansible_os_family == "RedHat"
 
 - name: Include SSL if needed
   ansible.builtin.include_tasks: ssl.yml
-  when:  proto == "https"
+  when: proto == "https"
+
+- name: Enable /info page acl
+  ansible.builtin.lineinfile:
+    path: "{{ nginx_include_path }}/{{ nginx_docservice_file }}"
+    insertafter: 'location ~* ^(\/[\d]+\.[\d]+\.[\d]+[\.|-][\d]+)?\/(info)(\/.*)$ {'
+    search_string: "allow"
+    line: "  allow {{ ds_info_allow }};"
+  when: ds_info_allow
+  notify: Restart-nginx
 
 - name: Supply license file
   ansible.builtin.template:
@@ -30,3 +25,11 @@
     group: root
     mode: 0644
   when: onlyoffice_license is defined
+
+- name: "Configure {{ onlyoffice_local_json_config }}"
+  ansible.builtin.copy:
+    dest: "{{ onlyoffice_local_json_config }}"
+    content: "{{ onlyoffice_local_json | to_nice_json(indent=2, sort_keys=false) }}\n"
+    mode: 0644
+  when: onlyoffice_local_json
+  notify: Restart-ds
