@@ -9,9 +9,9 @@
 * Added the ability to set up JWT secrets
 * Added the ability to customize values in the ONLYOFFICE Docs configuration
 * Added the ability to install onlyoffice-documentserver RPM package by URL
-* Added the ability to set up a custom document-server port
+* Added the ability to set up a custom port for the ONLYOFFICE Docs service
 * Added the option to configure an allowed IP/CIDR network for the info page
-* Added the ability to set up the ONLYOFFICE Docs's package state to the latest or present
+* Added the ability to set up the onlyoffice-documentserver's package state to the latest or present
 
 ### Fixes
 
