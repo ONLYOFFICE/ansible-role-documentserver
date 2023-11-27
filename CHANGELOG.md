@@ -15,10 +15,10 @@
 
 ### Fixes
 
-* Fixed [issue](https://github.com/ONLYOFFICE/ansible-role-documentserver/issues/67) by changing supervisorctl to systemctl
+* Fixed the [issue](https://github.com/ONLYOFFICE/ansible-role-documentserver/issues/67) by changing supervisorctl to systemctl
 * Updated service names
 * Fixed installation on RedHat 7
-* Fixed [issue](https://github.com/ONLYOFFICE/ansible-role-documentserver/issues/43) with JWT configuration on Debian
+* Fixed the [issue](https://github.com/ONLYOFFICE/ansible-role-documentserver/issues/43) with JWT configuration on Debian
 * Updated example playbook
 * Updated repository links
-* Added `log_directory` postgresql variable to fix [issue](https://github.com/geerlingguy/ansible-role-mysql/issues/175)
+* Added `log_directory` postgresql variable to fix the [issue](https://github.com/geerlingguy/ansible-role-mysql/issues/175)
