@@ -1,4 +1,8 @@
 ---
+- name: Install prereq
+  ansible.builtin.apt:
+    name: "{{ prereq_packages }}"
+
 - name: "Check if gpg key port is ok (port 11371)"
   ansible.builtin.wait_for:
     host: keyserver.ubuntu.com
