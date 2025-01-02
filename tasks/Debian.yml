@@ -125,14 +125,14 @@
   when:
     - redis_server_host|length > 0
     - is_nonfree_package | bool
-  notify: restart-ds
+  notify: Restart-ds
 
 - name: Set up redis port number
   ansible.builtin.shell: '{{ json }} -I -e ''this.services.CoAuthoring.redis.port  = "{{ redis_server_port }}"'''
   when:
     - redis_server_port
     - is_nonfree_package | bool
-  notify: restart-ds
+  notify: Restart-ds
 
 - name: Set up cluster mode
   ansible.builtin.debconf:
@@ -151,7 +151,7 @@
   ansible.builtin.shell: "{{ psql }} -f {{ createdb_sql }}"
   register: result
   changed_when: result.rc != 0
-  notify: restart-ds
+  notify: Restart-ds
 
 - name: Start example service
   ansible.builtin.systemd:
