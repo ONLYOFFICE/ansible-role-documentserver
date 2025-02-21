@@ -1,25 +1,14 @@
 ---
-- name: "Check if gpg key port is ok (port 11371)"
-  ansible.builtin.wait_for:
-    host: keyserver.ubuntu.com
-    port: 11371
-    timeout: 5
-  register: gpg_port_status
-  ignore_errors: true
 
 - name: Add onlyoffice gpg keys
-  ansible.builtin.apt_key:
-    keyserver: "keyserver.ubuntu.com"
-    id: "8320CA65CB2DE8E5"
-    state: present
-  when: not gpg_port_status.failed
+  ansible.builtin.get_url:
+    url: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xe09ca29f6e178040ef22b4098320ca65cb2de8e5
+    dest: "{{ package_repo_key }}"
 
-- name: Add onlyoffice gpg keys on port 80
-  ansible.builtin.apt_key:
-    keyserver: "hkp://keyserver.ubuntu.com:80"
-    id: "8320CA65CB2DE8E5"
-    state: present
-  when: gpg_port_status.failed
+- name: Ensure deprecated onlyoffice repo is removed
+  ansible.builtin.apt_repository:
+    repo: "{{ package_repo_deprecated }}"
+    state: absent
 
 - name: Add onlyoffice repositories
   ansible.builtin.apt_repository:
