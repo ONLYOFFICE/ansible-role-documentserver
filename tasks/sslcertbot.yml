@@ -1,0 +1,42 @@
+---
+
+- name: register the ssl cert names to use
+  set_fact:
+    _certbot_domains: "{{ certbot_domains | default([ansible_fqdn]) }}"
+
+- name: install required packages
+  apt:
+    name:
+      - certbot
+      - python3-certbot-nginx
+
+- name: generate Let's Encrypt certs
+  command: "certbot --nginx -d {{ _certbot_domains | join(',') }} --cert-name {{ _certbot_domains | first }} --quiet --expand --agree-tos --email {{ certbot_email | default('root@'+ansible_fqdn) }}"
+  args:
+    creates: "/etc/letsencrypt/live/{{ _certbot_domains | first }}/privkey.pem"
+
+# from here on this is the default ssl handling
+
+- name: Copy ds.conf template
+  command: cp -f /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl "{{ nginx_config_path }}"
+  become: yes
+  register: myoutput
+  changed_when: myoutput.rc != 0
+
+- name: Edit ssl cert path
+  lineinfile:
+          path: "{{ nginx_config_path }}"
+          regexp: "SSL_CERTIFICATE_PATH"
+          line: "  ssl_certificate /etc/letsencrypt/live/{{ _certbot_domains | first }}/fullchain.pem;"
+  notify:
+      restart-nginx
+  become: yes
+
+- name: Edit ssl key path
+  lineinfile:
+          path: "{{ nginx_config_path }}"
+          regexp: "SSL_KEY_PATH"
+          line: "  ssl_certificate_key /etc/letsencrypt/live/{{ _certbot_domains | first }}/privkey.pem;"
+  notify:
+      restart-nginx
+  become: yes

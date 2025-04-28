@@ -6,7 +6,15 @@
 
 - name: Include SSL if needed
   ansible.builtin.include_tasks: ssl.yml
-  when: proto == "https"
+  when:
+    - proto == "https"
+    - not (use_letsencrypt | default(false))
+
+- name: Include Let's Encrypt SSL config if needed
+  ansible.builtin.include_tasks: sslcertbot.yml
+  when:
+    - proto == "https"
+    - use_letsencrypt | default(false)
 
 - name: Enable /info page acl
   ansible.builtin.lineinfile:
